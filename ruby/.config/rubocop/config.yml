@@ -1,0 +1,7 @@
+AllCops:
+  ParserEngine: parser_prism
+  TargetRubyVersion: 3.3
+  NewCops: enable
+
+Style/FrozenStringLiteralComment:
+  EnforcedStyle: never

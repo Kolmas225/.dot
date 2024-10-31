@@ -1,0 +1,174 @@
+theme = "catppuccin_macchiato"
+
+[editor]
+line-number = "relative"
+cursorline = true
+bufferline = "multiple"
+color-modes = true
+scrolloff = 3
+popup-border = "popup"
+mouse = false
+middle-click-paste = false
+jump-label-alphabet = "ntesirachdoylupf"
+
+[editor.statusline]
+left = [
+  "mode",
+  "spinner",
+  "file-name",
+  "read-only-indicator",
+  "file-modification-indicator",
+  "total-line-numbers",
+  "position",
+]
+center = ["selections"]
+right = ["diagnostics", "register", "version-control", "file-encoding"]
+mode.normal = "<N>"
+mode.insert = "<I>"
+mode.select = "<S>"
+
+[editor.cursor-shape]
+insert = "bar"
+normal = "block"
+select = "underline"
+
+[editor.indent-guides]
+render = true
+
+[editor.soft-wrap]
+enable = true
+
+[keys.normal]
+n = "move_char_left"
+e = "move_visual_line_down"
+i = "move_visual_line_up"
+a = "move_char_right"
+N = "goto_first_nonwhitespace"
+E = "move_line_down"
+I = "move_line_up"
+A = "goto_line_end"
+
+"A-w" = "move_next_word_end"
+"A-W" = "move_next_long_word_end"
+
+r = "insert_mode"
+s = "append_mode"
+R = "insert_at_line_start"
+S = "insert_at_line_end"
+
+h = "search_next"
+H = "search_prev"
+
+l = "extend_line_below"
+L = "extend_line_above"
+"C-l" = "extend_to_line_bounds"
+"A-l" = "shrink_to_line_bounds"
+"A-r" = "replace_with_yanked"
+
+x = "select_regex"
+X = "split_selection"
+"A-x" = "split_selection_on_newline"
+
+j = "join_selections"
+J = "join_selections_space"
+k = "keep_selections"
+K = "remove_selections"
+
+"A-left" = ["delete_selection", "move_char_left", "paste_before"]
+"A-right" = ["delete_selection", "move_char_right", "paste_after"]
+"A-up" = [
+  "extend_to_line_bounds",
+  "delete_selection",
+  "move_line_up",
+  "paste_before",
+]
+"A-down" = ["extend_to_line_bounds", "delete_selection", "paste_after"]
+
+"#" = "toggle_comments"
+"A-#" = "toggle_block_comments"
+
+"C-y" = "scroll_up"
+"C-e" = "scroll_down"
+
+[keys.select]
+n = "extend_char_left"
+e = "extend_visual_line_down"
+i = "extend_visual_line_up"
+a = "extend_char_right"
+N = "extend_to_first_nonwhitespace"
+E = "extend_line_down"
+I = "extend_line_up"
+A = "extend_to_line_end"
+
+"A-w" = "extend_next_word_end"
+"A-W" = "extend_next_long_word_end"
+
+r = "insert_mode"
+s = "append_mode"
+R = "insert_at_line_start"
+S = "insert_at_line_end"
+
+h = "extend_search_next"
+H = "extend_search_prev"
+
+l = "extend_line_below"
+L = "extend_line_above"
+"C-l" = "extend_to_line_bounds"
+"A-l" = "shrink_to_line_bounds"
+"A-r" = "replace_with_yanked"
+
+x = "select_regex"
+X = "split_selection"
+"A-x" = "split_selection_on_newline"
+
+j = "join_selections"
+J = "join_selections_space"
+k = "keep_selections"
+K = "remove_selections"
+
+"A-left" = ["delete_selection", "move_char_left", "paste_before"]
+"A-right" = ["delete_selection", "move_char_right", "paste_after"]
+"A-up" = [
+  "extend_to_line_bounds",
+  "delete_selection",
+  "move_line_up",
+  "paste_before",
+]
+"A-down" = ["extend_to_line_bounds", "delete_selection", "paste_after"]
+
+"#" = "toggle_comments"
+"A-#" = "toggle_block_comments"
+
+"C-y" = "scroll_up"
+"C-e" = "scroll_down"
+
+# Space mode
+[keys.normal.space]
+"i" = "hover"
+"A-r" = "replace_selections_with_clipboard"
+
+# TODO Window mode (sorta)
+[keys.normal.space.w]
+c = ":bc"
+C = ":bc!"
+
+n = "jump_view_left"
+e = "jump_view_down"
+i = "jump_view_up"
+a = "jump_view_right"
+N = "swap_view_left"
+E = "swap_view_down"
+I = "swap_view_up"
+A = "swap_view_right"
+
+[keys.normal.space.w.x]
+s = ":hnew"
+v = ":vnew"
+
+# pseudo lang keymap
+[keys.normal.C-space]
+r = ":sh cargo run"
+b = ":sh cargo build"
+t = ":sh cargo test"
+
+"C-r" = ":rl"

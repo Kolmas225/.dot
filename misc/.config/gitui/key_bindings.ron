@@ -1,0 +1,46 @@
+// Note:
+// find `KeysList` type in src/keys/key_list.rs for all possible keys.
+// every key not overwritten via the config file will use the default specified there
+(
+    open_help: Some(( code: Char('?'), modifiers: "")),
+
+    move_left: Some(( code: Char('n'), modifiers: "")),
+    move_right: Some(( code: Char('a'), modifiers: "")),
+    move_up: Some(( code: Char('i'), modifiers: "")),
+    move_down: Some(( code: Char('e'), modifiers: "")),
+    
+    popup_up: Some(( code: Char('p'), modifiers: "CONTROL")),
+    popup_down: Some(( code: Char('n'), modifiers: "CONTROL")),
+    // page_up: Some(( code: Char('u'), modifiers: "CONTROL")),
+    // page_down: Some(( code: Char('d'), modifiers: "CONTROL")),
+    home: Some(( code: Char('g'), modifiers: "")),
+    end: Some(( code: Char('G'), modifiers: "SHIFT")),
+    shift_up: Some(( code: Char('I'), modifiers: "SHIFT")),
+    shift_down: Some(( code: Char('E'), modifiers: "SHIFT")),
+
+    edit_file: Some(( code: Char('e'), modifiers: "CONTROL")),
+
+    status_stage_all: Some(( code: Char('A'), modifiers: "SHIFT")),
+    status_reset_item: Some(( code: Char('U'), modifiers: "SHIFT")),
+    status_ignore_file: Some(( code: Char('i'), modifiers: "ALT")),
+
+    diff_reset_lines: Some(( code: Char('u'), modifiers: "")),
+    diff_stage_lines: Some(( code: Char('s'), modifiers: "")),
+    diff_hunk_next: Some(( code: Char('n'), modifiers: "ALT")),
+    diff_hunk_prev: Some(( code: Char('p'), modifiers: "ALT")),
+
+    stashing_save: Some(( code: Char('w'), modifiers: "")),
+    stashing_toggle_index: Some(( code: Char('m'), modifiers: "")),
+
+    stash_open: Some(( code: Char('l'), modifiers: "")),
+
+    log_find: Some(( code: Char('/'), modifiers: "")),
+    find_commit_sha: Some(( code: Char('j'), modifiers: "CONTROL")),
+
+    file_find: Some(( code: Char('/'), modifiers: "")),
+    branch_find: Some(( code: Char('/'), modifiers: "")),
+
+    abort_merge: Some(( code: Char('M'), modifiers: "SHIFT")),
+
+    commit: Some(( code: Char('c'), modifiers: "ALT")),
+)

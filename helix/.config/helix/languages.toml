@@ -1,0 +1,120 @@
+[[language]]
+name = "python"
+auto-format = true
+
+[[language]]
+name = "rust"
+formatter = { command = "rustfmt" }
+auto-format = true
+
+[[language]]
+name = "javascript"
+shebangs = ["deno", "node"]
+roots = ["deno.json", "deno.jsonc", "package.json", "tsconfig.json"]
+language-servers = ["deno-lsp"]
+auto-format = true
+
+[[language]]
+name = "jsx"
+shebangs = ["deno", "node"]
+roots = ["deno.json", "deno.jsonc", "package.json", "tsconfig.json"]
+language-servers = ["deno-lsp"]
+auto-format = true
+
+[[language]]
+name = "typescript"
+shebangs = ["deno", "node"]
+roots = ["deno.json", "deno.jsonc", "package.json", "tsconfig.json"]
+language-servers = ["deno-lsp"]
+auto-format = true
+
+[[language]]
+name = "tsx"
+shebangs = ["deno", "node"]
+roots = ["deno.json", "deno.jsonc", "package.json", "tsconfig.json"]
+language-servers = ["deno-lsp"]
+auto-format = true
+
+[language-server.deno-lsp]
+command = "deno"
+args = ["lsp"]
+
+[language-server.deno-lsp.config.deno]
+enable = true
+lint = true
+suggest.imports.hosts = { "https://deno.land" = true }
+inlayHints.parameterNames.enabled = "all"
+inlayHints.parameterTypes.enabled = true
+inlayHints.variableTypes.enabled = true
+inlayHints.propertyDeclarationTypes.enabled = true
+inlayHints.functionLikeReturnTypes.enabled = true
+inlayHints.enumMemberValues.enabled = true
+
+[[language]]
+name = "ruby"
+language-servers = [
+  { name = "ruby-lsp", except-features = [
+    "format",
+  ] },
+  { name = "rubocop", only-features = [
+    "format",
+  ] },
+]
+auto-format = true
+[language-server.ruby-lsp]
+command = "ruby-lsp"
+args = []
+[language-server.rubocop]
+command = "bundle"
+args = ["exec", "rubocop", "--lsp", "--stderr", "--fail-level", "fatal"]
+
+[[language]]
+name = "lua"
+auto-format = true
+formatter = { command = "stylua", args = ["-"] }
+
+[[language]]
+name = "janet"
+auto-format = true
+language-servers = ["janet-lsp", "scls"]
+[language-server.janet-lsp]
+command = "janet-lsp"
+args = []
+
+[[language]]
+name = "toml"
+formatter = { command = "taplo", args = ["fmt", "-"] }
+auto-format = true
+
+[[language]]
+name = "org"
+language-servers = ["scls"]
+
+# simple-completion-server
+[language-server.scls]
+command = "simple-completion-language-server"
+
+[language-server.scls.config]
+max_completion_items = 20            # set max completion results len for each group: words, snippets, unicode-input
+snippets_first = true                # completions will return before snippets by default
+snippets_inline_by_word_tail = false # suggest snippets by WORD tail, for example text `xsq|` become `x^2|` when snippet `sq` has body `^2`
+feature_words = true                 # enable completion by word
+feature_snippets = true              # enable snippets
+feature_unicode_input = true         # enable "unicode input"
+feature_paths = true                 # enable path completion
+feature_citations = false            # enable citation completion (only on `citation` feature enabled)
+
+# # write logs to /tmp/completion.log
+# [language-server.scls.environment]
+# RUST_LOG = "info,simple-completion-language-server=info"
+# LOG_FILE = "/tmp/completion.log"
+
+# introduce a new language to enable completion on any doc by forcing set language with :set-language stub
+[[language]]
+name = "stub"
+scope = "text.stub"
+file-types = []
+shebangs = []
+roots = []
+auto-format = false
+language-servers = ["scls"]
