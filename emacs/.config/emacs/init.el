@@ -1804,5 +1804,35 @@ end")
 (use-package yaml-mode
   :mode ("\\.y[a]?ml\\'" . yaml-mode))
 
+;; TODO
+(use-package consult-omni
+  :ensure
+  (consult-omni :type git :host github
+                :repo "armindarvish/consult-omni"
+                :branch "main" :files (:defaults "sources/*.el"))
+  :after consult
+  :custom
+  (consult-omni-preview-key "M-.")
+  (consult-omni-show-preview t)
+  (consult-omni-default-count 8)
+  :bind
+  ("C-c s a" . #'consult-omni-apps)
+  ("C-c s w" . #'consult-omni-wikipedia-static)
+  ("C-c s =" . #'consult-omni-calc)
+  :config
+  ;; Load Sources Core code
+  (require 'consult-omni-sources)
+  ;; Load Embark Actions
+  (require 'consult-omni-embark)
+  (setq consult-omni-sources-modules-to-load
+        '(consult-omni-apps
+          consult-omni-calc
+          consult-omni-wikipedia))
+  (consult-omni-sources-load-modules)
+
+  (consult-customize
+   consult-omni-calc :initial "#= "
+   consult-omni-apps :initial "#.*#"))
+
 (provide 'init)
 ;;; init.el ends here
