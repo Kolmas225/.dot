@@ -252,8 +252,10 @@
   :init
   (recentf-mode 1)
   :config
-  (dolist (var '("\.gpg$" "\.asc$" "\.sig$" "/\.ssh/"
-                 "/Private/" "^/tmp/"))
+  (dolist (var '("\\.gpg\\'" "\\.asc\\'" "\\.sig\\'" "\\.ssh/"
+                 "/Private/" "^/tmp/"
+                 "/COMMIT_EDITMSG\\'"
+                 "/\\.git/"))
     (add-to-list 'recentf-exclude var)))
 
 (use-package repeat
@@ -547,6 +549,10 @@
 (use-package consult
   :custom
   (consult-narrow-key "<")
+  (consult-preview-excluded-files
+   '("\\`/[^/|:]+:"                     ;remote file
+     "\\.gpg\\'" "\\.asc\\'" "\\.sig\\'" "\\.ssh/"
+     "Private/"))
   (xref-show-xrefs-function #'consult-xref)
   (xref-show-definitions-function #'consult-xref)
   :bind
@@ -1462,10 +1468,12 @@ Used to preselect nearest headings and imenu items.")
   :custom
   (consult-denote-grep-command #'consult-ripgrep)
   (consult-denote-find-command #'consult-fd)
+  (consult-denote-mode t)
   :bind
   ("C-c n s" . #'consult-denote-grep)
   ("C-c n S" . #'consult-denote-grep-in-silo)
   :config
+  
   (consult-customize consult-denote-grep consult-denote-find
                      :preview-key "M-.")
   
