@@ -1683,6 +1683,7 @@ Used to preselect nearest headings and imenu items.")
   (ruby-ts-mode . indent-bars-mode)
   (ruby-ts-mode . subword-mode)
   (ruby-ts-mode . inf-ruby-minor-mode)
+  (ruby-ts-mode . (lambda () (setq-local tab-width 2)))
   :init
   (add-to-list 'major-mode-remap-alist '(ruby-mode . ruby-ts-mode))
   :config
