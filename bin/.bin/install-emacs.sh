@@ -24,7 +24,7 @@ if [ -d "$EMACS_SOURCE_DIR" ]; then
     esac
 
 else
-    git clone -b $EMACS_BRANCH $EMACS_GIT_SOURCE "$EMACS_SOURCE_DIR"
+    git clone -b $EMACS_BRANCH --depth=1 $EMACS_GIT_SOURCE "$EMACS_SOURCE_DIR"
 fi
 
 cd "$EMACS_SOURCE_DIR"

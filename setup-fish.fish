@@ -13,6 +13,9 @@ fish_config theme save "Catppuccin Macchiato"
 # pure prompt
 fisher install pure-fish/pure
 
+# setup rust
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
 # setup rbenv
 curl -fsSL https://rbenv.org/install.sh | bash
 
