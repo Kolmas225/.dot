@@ -26,5 +26,3 @@ unset rc
 
 # Enable yjit for ruby
 export RUBY_YJIT_ENABLE=true
-
-. "/home/kolmas/.deno/env"
