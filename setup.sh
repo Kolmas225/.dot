@@ -11,7 +11,7 @@ baseSetupPacman() {
 }
 
 baseSetupDnf() {
-    sudo dnf install git wget curl fd ripgrep unar fish helix zoxide \
+    sudo dnf install stow git wget curl fd ripgrep unar fish helix zoxide \
          tree-sitter libgccjit
 
     # Fedora's repo don't have wezterm
