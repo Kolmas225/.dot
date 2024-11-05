@@ -492,6 +492,7 @@
   ;; (resize-mini-windows t)        ;resizing as results narrow down
   (vertico-resize nil)
   (vertico-count 13)
+  (vertico-cycle t)
   :bind
   (:map vertico-map
         ("DEL" . #'vertico-directory-delete-char)
@@ -1098,7 +1099,7 @@ Used to preselect nearest headings and imenu items.")
         ("C-w" . #'isearch-yank-word-or-char)
         ("C-M-w" . #'isearch-yank-symbol-or-char)
         ("C-." . #'avy-isearch)
-        ("M-s" . #'consult-line))
+        ("M-s M-s" . #'consult-line))
   :config
   (isearch-mb-mode 1)
   (add-to-list 'isearch-mb--with-buffer #'consult-isearch-history)
