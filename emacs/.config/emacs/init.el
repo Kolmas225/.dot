@@ -1795,9 +1795,21 @@ Used to preselect nearest headings and imenu items.")
   :init
   (add-to-list 'eglot-server-programs '(lua-ts-mode . ("stylua" "-"))))
 
+;;; json
+(use-package json
+  :ensure nil
+  :init
+  (add-to-list 'major-mode-remap-alist '(js-json-mode . json-ts-mode)))
+
 ;;; yaml
 (use-package yaml-mode
   :mode ("\\.y[a]?ml\\'" . yaml-mode))
+
+;;; web-mode
+(use-package web-mode
+  :mode
+  ("\\.erb\\'" . web-mode)
+  ("\\.html?\\'" . web-mode))
 
 (provide 'init)
 ;;; init.el ends here
