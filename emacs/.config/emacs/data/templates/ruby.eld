@@ -4,3 +4,5 @@ ruby-mode
 
 (inl & n "require 'bundler/inline'\n\ngemfile do
   source 'https://rubygems.org'\nend" o n)
+
+(hdoc "<<~" (p "EOF" name) n> "  " q n> name)
