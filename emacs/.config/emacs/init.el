@@ -1174,7 +1174,6 @@ Used to preselect nearest headings and imenu items.")
   :bind
   ("C-x d" . #'dired-jump)
   (:map dired-mode-map
-        ("M-s f" . nil)
         ("C-+" . dired-create-empty-file)))
 
 (use-package wdired
@@ -1546,7 +1545,7 @@ Used to preselect nearest headings and imenu items.")
     (interactive)
     (empv-seek "-5" '("relative")))
   
-  (add-to-list 'empv-mpv-args "--ytdl-format=bestvideo[height<=?720]+bestaudio/best")
+  (add-to-list 'empv-mpv-args "--ytdl-format=bestvideo[height<=?720]+bestaudio/best[ext=mp4]/best")
   ;; TODO
   (with-eval-after-load 'embark (empv-embark-initialize-extra-actions)))
 
@@ -1568,7 +1567,8 @@ Used to preselect nearest headings and imenu items.")
   (eglot-sync-connect 1)
   (eglot-autoshutdown t)
   :bind
-  ("C-c C-;" . #'eglot-code-actions))
+  (:map eglot-mode-map
+        ("C-c C-;" . #'eglot-code-actions)))
 
 (use-package consult-eglot
   :after eglot
@@ -1698,6 +1698,8 @@ Used to preselect nearest headings and imenu items.")
                               "Thorfile" "Capfile" "Guardfile" "Vagrantfile")))
 
 (use-package ruby-end
+  :ensure
+  (:host github :repo "Kolmas225/ruby-end.el" :files ("*.el"))
   :custom
   (ruby-end-insert-newline nil))
 
@@ -1738,10 +1740,29 @@ Used to preselect nearest headings and imenu items.")
   (rspec-use-rvm (executable-find "rvm"))
   (rspec-use-spring-when-possible nil))
 
+;;; Crystal
+(use-package crystal-mode
+  :mode "\\.cr\\'"
+  :interpreter "crystal")
+
 ;;; Elixir
 (use-package elixir-ts-mode
   :ensure nil
-  :mode ("\\.ex\\'" . elixir-ts-mode))
+  :mode ("\\.ex\\'" . elixir-ts-mode)
+  :bind
+  (:map elixir-ts-mode-map
+        ("M-RET" . #'my/insert-elixir-pipe-operator))
+  :config
+  ;; modified from https://www.bounga.org/emacs/2020/04/22/easily-insert-elixir-pipe-operator-in-emacs/
+  (defun my/insert-elixir-pipe-operator ()
+    "Insert a newline and the |> operator"
+    (interactive)
+    (end-of-line)
+    (unless (save-excursion
+              (beginning-of-line)
+              (looking-at-p "[[:space:]]*$"))
+      (newline-and-indent))
+    (insert "|> ")))
 
 (use-package inf-elixir
   :after elixir-ts-mode
