@@ -1351,7 +1351,6 @@ Used to preselect nearest headings and imenu items.")
      (:tangle . "no")))
   :config
   (add-to-list 'org-babel-tangle-lang-exts '("scheme" . "scm"))
-  (add-to-list 'org-src-lang-modes '("ruby" . ruby-ts))
   (add-to-list 'org-src-lang-modes '("sh" . bash-ts))
   (add-to-list 'org-src-lang-modes '("bash" . bash-ts))
   (org-babel-do-load-languages
@@ -1651,51 +1650,25 @@ Used to preselect nearest headings and imenu items.")
 (use-package robe
   :hook
   (ruby-mode . robe-mode)
-  (ruby-ts-mode . robe-mode)
   :bind
   (:map robe-mode-map
         ("C-c M-j" . #'robe-start)))
 
-;; (use-package ruby-mode
-;;   :ensure nil
-;;   :custom
-;;   (ruby-insert-encoding-magic-comment nil)
-;;   :hook
-;;   ;; FIXME Disabling popupinfo until this resolves
-;;   ;; https://github.com/dgutov/robe/issues/144
-;;   (ruby-mode . (lambda () (setq-local corfu-popupinfo-delay '(nil . 0.2))))
-;;   (ruby-mode . flymake-mode)
-;;   (ruby-mode . indent-bars-mode)
-;;   (ruby-mode . subword-mode)
-;;   :config
-;;   (with-eval-after-load 'apheleia
-;;     (setf (alist-get 'ruby-mode apheleia-mode-alist)
-;;           '(rubocop))))
-
-(use-package ruby-ts-mode
+(use-package ruby-mode
   :ensure nil
   :custom
   (ruby-insert-encoding-magic-comment nil)
   :hook
   ;; FIXME Disabling popupinfo until this resolves
   ;; https://github.com/dgutov/robe/issues/144
-  (ruby-ts-mode . (lambda () (setq-local corfu-popupinfo-delay '(nil . 0.2))))
-  (ruby-ts-mode . flymake-mode)
-  (ruby-ts-mode . indent-bars-mode)
-  (ruby-ts-mode . subword-mode)
-  (ruby-ts-mode . inf-ruby-minor-mode)
-  (ruby-ts-mode . (lambda () (setq-local tab-width 2)))
-  :init
-  (add-to-list 'major-mode-remap-alist '(ruby-mode . ruby-ts-mode))
+  (ruby-mode . (lambda () (setq-local corfu-popupinfo-delay '(nil . 0.2))))
+  (ruby-mode . flymake-mode)
+  (ruby-mode . indent-bars-mode)
+  (ruby-mode . subword-mode)
   :config
   (with-eval-after-load 'apheleia
-    (setf (alist-get 'ruby-ts-mode apheleia-mode-alist)
-          '(rubocop)))
-  ;; missing from ruby-ts-mode(?)
-  (require 'semantic/symref/grep)
-  (add-to-list 'semantic-symref-filepattern-alist
-               '(ruby-ts-mode "*.r[bu]" "*.rake" "*.gemspec" "*.erb" "*.haml" "Rakefile"
-                              "Thorfile" "Capfile" "Guardfile" "Vagrantfile")))
+    (setf (alist-get 'ruby-mode apheleia-mode-alist)
+          '(rubocop))))
 
 (use-package ruby-end
   :ensure
