@@ -419,11 +419,30 @@
   :config
   (doom-modeline-mode))
 
+(use-package paren
+  :ensure nil
+  :custom
+  (show-paren-context-when-offscreen 'overlay))
+
 (use-package rainbow-delimiters
   ;; :custom
   ;; (rainbow-delimiters-max-face-count 4)
   :hook
   (prog-mode . rainbow-delimiters-mode))
+
+(use-package highlight-parentheses
+  :custom
+  (global-highlight-parentheses-mode t)
+  (highlight-parentheses-delay 0.2)
+  (highlight-parentheses-colors 'nil)
+  (highlight-parentheses-attributes
+   '((:underline t) (:underline t) (:underline t))))
+
+(use-package colorful-mode
+  :custom
+  (colorful-use-prefix nil)
+  :bind
+  ("C-c t c" . #'colorful-mode))
 
 (use-package goggles
   :hook ((prog-mode text-mode) . goggles-mode))
@@ -1107,6 +1126,12 @@ Used to preselect nearest headings and imenu items.")
   (add-to-list 'isearch-mb--with-buffer #'isearch-yank-symbol-or-char)
   (add-to-list 'isearch-mb--after-exit #'avy-isearch)
   (add-to-list 'isearch-mb--after-exit #'consult-line))
+
+;;; symbol-overlay
+(use-package symbol-overlay
+  :bind
+  ("M-n" . #'symbol-overlay-jump-next)
+  ("M-p" . #'symbol-overlay-jump-prev))
 
 ;;; eshell
 (use-package eshell
