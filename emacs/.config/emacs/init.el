@@ -1774,6 +1774,12 @@ end")
   ;;         '(ruff)))
   )
 
+;;; clojure
+(use-package clojure-ts-mode)
+(use-package cider
+  :custom
+  (cider-jack-in-default 'babashka))
+
 ;;; Janet
 (use-package janet-ts-mode
   :ensure (:host github :repo "sogaiu/janet-ts-mode" :files ("*.el"))
