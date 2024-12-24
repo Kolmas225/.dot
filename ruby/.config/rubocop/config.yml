@@ -5,3 +5,6 @@ AllCops:
 
 Style/FrozenStringLiteralComment:
   EnforcedStyle: never
+
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented_relative_to_receiver
