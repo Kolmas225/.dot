@@ -1759,6 +1759,20 @@ Used to preselect nearest headings and imenu items.")
   ;;         '(ruff)))
   )
 
+;;; clojure
+(use-package clojure-ts-mode
+  :custom
+  (clojure-ts-toplevel-inside-comment-form t)
+  :hook
+  (clojure-ts-mode . cider-mode)
+  :mode
+  ("\\.clj\\'" . clojure-ts-mode))
+
+(use-package cider
+  :custom
+  (cider-jack-in-default 'babashka)
+  (cider-repl-display-help-banner nil))
+
 ;;; Janet
 (use-package janet-ts-mode
   :ensure (:host github :repo "sogaiu/janet-ts-mode" :files ("*.el"))
