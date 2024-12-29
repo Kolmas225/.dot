@@ -16,7 +16,7 @@ desc = "Chmod on selected files"
 [[manager.prepend_keymap]]
 on = ["g", "r"]
 run = '''
-	shell 'ya pub dds-cd --str "$(git rev-parse --show-toplevel)"' --confirm
+	shell 'ya pub dds-cd --str "$(git rev-parse --show-toplevel)"'
 '''
 
 [manager]
@@ -68,17 +68,17 @@ keymap = [
 
   # Selection
   { on = "m", run = [
-    "select --state=true",
+    "toggle --state=on",
     "arrow 1",
   ], desc = "Select the current file" },
-  { on = "M", run = "select_all --state=true", desc = "Select all files" },
+  { on = "M", run = "toggle_all --state=on", desc = "Select all files" },
   { on = "u", run = [
-    "select --state=false",
+    "toggle --state=off",
     "arrow 1",
   ], desc = "Deselect the current file" },
   { on = "U", run = [
     "unyank",
-    "select_all --state=false",
+    "toggle_all --state=off",
   ], desc = "Deselect (and unyank) all files" },
 
   # Operation
@@ -117,7 +117,7 @@ keymap = [
   { on = [
     "l",
     "c",
-  ], run = "linemode ctime", desc = "Set linemode to ctime" },
+  ], run = "linemode btime", desc = "Set linemode to btime" },
   { on = [
     "l",
     "m",
@@ -163,30 +163,30 @@ keymap = [
     ",",
     "m",
   ], run = [
-    "sort modified --reverse=no",
+    "sort mtime --reverse=no",
     "linemode mtime",
-  ], desc = "Sort by modified time" },
+  ], desc = "Sort by mtime" },
   { on = [
     ",",
     "M",
   ], run = [
-    "sort modified --reverse",
+    "sort mtime --reverse",
     "linemode mtime",
-  ], desc = "Sort by modified time (reverse)" },
+  ], desc = "Sort by mtime (reverse)" },
   { on = [
     ",",
     "c",
   ], run = [
-    "sort created --reverse=no",
-    "linemode ctime",
-  ], desc = "Sort by created time" },
+    "sort btime --reverse=no",
+    "linemode btime",
+  ], desc = "Sort by btime" },
   { on = [
     ",",
     "C",
   ], run = [
-    "sort created --reverse",
-    "linemode ctime",
-  ], desc = "Sort by created time (reverse)" },
+    "sort btime --reverse",
+    "linemode btime",
+  ], desc = "Sort by btime (reverse)" },
   { on = [
     ",",
     "e",
@@ -301,7 +301,7 @@ keymap = [
   { on = "<F1>", run = "help", desc = "Open help" },
 ]
 
-[select]
+[pick]
 keymap = [
   { on = "<Esc>", run = "close", desc = "Cancel selection" },
   { on = "<C-c>", run = "close", desc = "Cancel selection" },
