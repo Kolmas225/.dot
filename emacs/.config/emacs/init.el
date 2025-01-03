@@ -1550,7 +1550,7 @@ end")
   :hook
   (empv-init . empv-override-quit-key)
   :bind-keymap
-  ("C-c v" . empv-map)
+  ("C-c m" . empv-map)
   :bind
   ("<AudioPrev>" . #'empv-playlist-prev)
   ("<AudioNext>" . #'empv-playlist-next)
