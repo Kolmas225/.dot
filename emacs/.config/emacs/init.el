@@ -173,6 +173,9 @@
   (tab-bar-show 1)
   ;; prefer spaces to tabs
   (indent-tabs-mode nil)
+  ;; browse-url
+  (browse-url-browser-function #'browse-url-firefox)
+  (browse-url-firefox-program "firefox-flatpak-private")
   :hook
   (after-init . column-number-mode)
   (after-init . minibuffer-depth-indicate-mode)
