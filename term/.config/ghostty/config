@@ -1,0 +1,13 @@
+# ghostty config
+command = "fish -i"
+theme = "catppuccin-macchiato"
+window-decoration = none
+
+# fonts
+font-size = 14
+font-family = "JetBrains Mono"
+
+# HACK: CTRL-M = CR, CTRL-I = Tab, CTRL-[ = Esc
+keybind = ctrl+m=text:\x0D
+keybind = ctrl+i=text:\x09
+keybind = ctrl+[=text:\x1B
