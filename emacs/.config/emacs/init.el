@@ -437,7 +437,7 @@
   (highlight-parentheses-delay 0.2)
   (highlight-parentheses-colors 'nil)
   (highlight-parentheses-attributes
-   '((:underline t) (:underline t) (:underline t))))
+   '((:underline t))))
 
 (use-package colorful-mode
   :custom
