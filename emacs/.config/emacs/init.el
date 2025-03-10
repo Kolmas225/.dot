@@ -328,9 +328,9 @@
 
 ;;; Font
 
-(set-face-attribute 'default nil :font "JetBrains Mono-14")
-(set-face-attribute 'fixed-pitch nil :font "JetBrains Mono-14")
-(set-face-attribute 'fixed-pitch-serif nil :font "JetBrains Mono-14")
+(set-face-attribute 'default nil :font "Maple Mono-14")
+(set-face-attribute 'fixed-pitch nil :font "Maple Mono-14")
+(set-face-attribute 'fixed-pitch-serif nil :font "Maple Mono-14")
 
 (set-face-attribute 'variable-pitch nil :family "Inter-14")
 
@@ -1365,6 +1365,7 @@ Used to preselect nearest headings and imenu items.")
   :custom
   (org-src-preserve-indentation nil)
   (org-edit-src-content-indentation 0)
+  (org-babel-clojure-backend 'babashka)
   ;; trust the programmer, it can never go wrong
   (org-confirm-babel-evaluate nil)
   (org-babel-default-header-args
@@ -1381,7 +1382,7 @@ Used to preselect nearest headings and imenu items.")
   (add-to-list 'org-src-lang-modes '("bash" . bash-ts))
   (org-babel-do-load-languages
    'org-babel-load-languages
-   '((scheme . t)
+   '((clojure . t)
      (python . t)
      (ruby . t))))
 
