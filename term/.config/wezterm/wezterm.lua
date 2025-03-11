@@ -4,7 +4,7 @@ local config = {}
 config.default_prog = { "/usr/bin/env", "-S", "fish", "-i" }
 config.warn_about_missing_glyphs = false
 config.font = wezterm.font_with_fallback({
-	"JetBrains Mono",
+	"Maple Mono",
 	"Chiron Hei HK",
 })
 config.font_size = 14.0

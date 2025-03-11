@@ -5,7 +5,7 @@ window-decoration = none
 
 # fonts
 font-size = 14
-font-family = "JetBrains Mono"
+font-family = "Maple Mono"
 
 # HACK: CTRL-M = CR, CTRL-I = Tab, CTRL-[ = Esc
 keybind = ctrl+m=text:\x0D
