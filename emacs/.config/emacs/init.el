@@ -425,6 +425,23 @@
   :custom
   (show-paren-context-when-offscreen 'overlay))
 
+(use-package which-func
+  :ensure nil
+  :custom
+  (which-func-modes '(prog-mode))
+  ;; (which-func-display 'header)
+  (which-func-format `((:propertize (" ➤ " which-func-current)
+                                    local-map ,which-func-keymap
+                                    face which-func
+                                    mouse-face mode-line-highlight
+                                    help-echo "mouse-1: go to beginning\n\
+mouse-2: toggle rest visibility\n\
+mouse-3: go to end")))
+  :hook
+  (after-init . which-function-mode)
+  :config
+  (setq which-func-unknown "N/A"))
+
 (use-package rainbow-delimiters
   ;; :custom
   ;; (rainbow-delimiters-max-face-count 4)
