@@ -197,19 +197,13 @@
    ("M-l" . #'downcase-dwim)
    ("M-u" . #'upcase-dwim)
    ;; scroll
-   ("C-<next>" . #'scroll-right)
-   ("C-<prior>" . #'scroll-left)
+   ("C-<next>" . #'my/scroll-right-half-window)
+   ("C-<prior>" . #'my/scroll-left-half-window)
    (:map mode-specific-map
-         ("o x" . #'scratch-buffer))
+         ("o x" . #'scratch-buffer)
+         ("t v" . #'visual-line-mode))
    (:map ctl-x-map
-         ("k" . #'kill-current-buffer)
-         ("<" . #'scroll-right)
-         (">" . #'scroll-left))
-   (:repeat-map my/scroll-repeat-map
-                ("<" . #'scroll-right)
-                ("<next>" . #'scroll-right)
-                (">" . #'scroll-left)
-                ("<prior>" . #'scroll-left)))
+         ("k" . #'kill-current-buffer)))
   :config
   ;; Add prompt indicator to `completing-read-multiple'.
   ;; We display [CRM<separator>], e.g., [CRM,] if the separator is a comma.
@@ -220,7 +214,26 @@
                    crm-separator)
                   (car args))
           (cdr args)))
-  (advice-add #'completing-read-multiple :filter-args #'crm-indicator))
+  (advice-add #'completing-read-multiple :filter-args #'crm-indicator)
+
+  ;; NOTE: taken from https://stackoverflow.com/a/1249665
+  (defun my/horizontal-recenter ()
+    "make the point horizontally centered in the window"
+    (interactive)
+    (let ((mid (/ (window-width) 2))
+          (line-len (save-excursion (end-of-line) (current-column)))
+          (cur (current-column)))
+      (if (< mid cur)
+          (set-window-hscroll (selected-window)
+                              (- cur mid)))))
+  (keymap-global-set "C-S-l" #'my/horizontal-recenter)
+
+  (defun my/scroll-right-half-window ()
+    (interactive)
+    (scroll-right (/ (window-width) 2)))
+  (defun my/scroll-left-half-window ()
+    (interactive)
+    (scroll-left (/ (window-width) 2))))
 
 ;; bookmark
 (use-package bookmark
@@ -858,22 +871,22 @@ Used to preselect nearest headings and imenu items.")
   (eldoc-box-clear-with-C-g t)
   :bind
   (:map eglot-mode-map
+        ("C-M-<prior>" . #'my/eldoc-box-scroll-up)
+        ("C-M-<next>" . #'my/eldoc-box-scroll-down)
         ("C-h ." . #'eldoc-box-help-at-point))
-  ;; :config
-  ;; TODO: make scrolling eldoc-box work 
-  ;; (defun my/eldoc-box-scroll-up ()
-  ;;   "Scroll up in `eldoc-box--frame'"
-  ;;   (interactive)
-  ;;   (with-current-buffer eldoc-box--buffer
-  ;;     (with-selected-frame eldoc-box--frame
-  ;;       (scroll-down 5))))
-  ;; (defun my/eldoc-box-scroll-down ()
-  ;;   "Scroll down in `eldoc-box--frame'"
-  ;;   (interactive)
-  ;;   (with-current-buffer eldoc-box--buffer
-  ;;     (with-selected-frame eldoc-box--frame
-  ;;       (scroll-up 5))))
-  )
+  :init
+  (defun my/eldoc-box-scroll-up ()
+    "Scroll up in `eldoc-box--frame'"
+    (interactive)
+    (with-current-buffer eldoc-box--buffer
+      (with-selected-frame eldoc-box--frame
+        (scroll-down 5))))
+  (defun my/eldoc-box-scroll-down ()
+    "Scroll down in `eldoc-box--frame'"
+    (interactive)
+    (with-current-buffer eldoc-box--buffer
+      (with-selected-frame eldoc-box--frame
+        (scroll-up 5)))))
 
 ;;; Templates
 (use-package tempel
