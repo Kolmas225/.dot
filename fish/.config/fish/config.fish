@@ -11,7 +11,7 @@ if status is-interactive
         abbr -a dbef distrobox enter -n bazzite-arch-gnome -- fish -i
     end
     set -e current_os
-    
+
     abbr -a e exit
     # abbr -a n $EDITOR $NOTES_DIR
     abbr -a gu gitui
@@ -26,7 +26,7 @@ if status is-interactive
         set -gx EDITOR hx
         abbr -a hl hx
     end
-        
+
     # yazi
     function y
         set tmp (mktemp -t "yazi-cwd.XXXXXX")
@@ -47,9 +47,14 @@ if status is-interactive
         git config user.email "kolmas@noreply.codeberg.org"
     end
 
-    # TODO: fishv4 will add fish_should_add_to_history
-    # which can prevent certain command be stored into history 
-    # https://stackoverflow.com/a/78909776
+    # TODO now works in fish 4.0
+    function fish_should_add_to_history
+        # for cmd in vault mysql ls
+        for cmd in rm
+            string match -qr "^$cmd" -- $argv; and return 1
+        end
+        return 0
+    end
 
     zoxide init fish --cmd cd | source
 end
