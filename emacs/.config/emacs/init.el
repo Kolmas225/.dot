@@ -1475,12 +1475,6 @@ Used to preselect nearest headings and imenu items.")
 (use-package denote
   :custom
   (denote-directory (expand-file-name "~/Documents/org/denote/"))
-  (denote-silo-extras-directories
-   `(,(denote-directory)
-     ,(expand-file-name "dumps/" "~/Private/")
-     ,(expand-file-name "consume/" "~/Private/")
-     ;; ,(expand-file-name "temp/" "~/src")
-     ))
   (denote-file-name-components-order '(title signature keywords identifier))
   (denote-prompts '(title keywords subdirectory))
   (denote-rename-confirmations nil)
@@ -1504,19 +1498,9 @@ Used to preselect nearest headings and imenu items.")
   ("C-c n l" . #'denote-find-link)
   ("C-c n b" . #'denote-find-backlink)
   ("C-c n B" . #'denote-backlinks)
-  ("C-c n h" . #'denote-org-extras-link-to-heading)
-  ("C-c n H" . #'denote-org-extras-backlinks-for-heading)
   ("C-c n r" . #'denote-rename-file)
-  ("C-c n x" . #'denote-silo-extras-open-or-create)
-  ("C-c n X" . #'denote-silo-extras-select-silo-then-command)
   ;; dired sort
   ("C-c n d" . #'denote-sort-dired)
-  ;; extract org-subtree to a new denote
-  ("C-c n e" . #'denote-org-extras-extract-org-subtree)
-  ;; org dynamic blocks
-  ("C-c n o l" . #'denote-org-extras-dblock-insert-links)
-  ("C-c n o b" . #'denote-org-extras-dblock-insert-backlinks)
-  ("C-c n o f" . #'denote-org-extras-dblock-insert-files)
   ;; keywords
   ("C-c n w" . #'denote-rename-file-keywords)
   (:map dired-mode-map
@@ -1532,6 +1516,35 @@ Used to preselect nearest headings and imenu items.")
       (completing-read prompt table nil t nil nil denote-directory)))
   (advice-add #'denote--subdirs-completion-table
               :override #'my-denote--subdirs-completion-table))
+
+(use-package denote-org
+  :after denote
+  :ensure
+  (:host github :repo "protesilaos/denote-org")
+  :bind
+  ("C-c n h" . #'denote-org-link-to-heading)
+  ("C-c n H" . #'denote-org-backlinks-for-heading)
+  ;; extract org-subtree to a new denote
+  ("C-c n e" . #'denote-org-extract-org-subtree)
+  ;; org dynamic blocks
+  ("C-c n o l" . #'denote-org-dblock-insert-links)
+  ("C-c n o b" . #'denote-org-dblock-insert-backlinks)
+  ("C-c n o f" . #'denote-org-dblock-insert-files))
+
+(use-package denote-silo
+  :after denote
+  :ensure
+  (:host github :repo "protesilaos/denote-silo")
+  :custom
+  (denote-silo-directories
+   `(,(denote-directory)
+     ,(expand-file-name "dumps/" "~/Private/")
+     ,(expand-file-name "consume/" "~/Private/")
+     ;; ,(expand-file-name "temp/" "~/src")
+     ))
+  :bind
+  ("C-c n x" . #'denote-silo-open-or-create)
+  ("C-c n X" . #'denote-silo-select-silo-then-command))
 
 (use-package consult-denote
   :after (consult denote)
@@ -1553,8 +1566,7 @@ Used to preselect nearest headings and imenu items.")
     "Call `consult-denote-grep-command' in a silo."
     (declare (interactive-only t))
     (interactive)
-    (require 'denote-silo-extras)
-    (let ((denote-directory (denote-silo-extras-directory-prompt)))
+    (let ((denote-directory (denote-silo-directory-prompt)))
       (funcall-interactively consult-denote-grep-command (denote-directory)))))
 
 ;;; Media
