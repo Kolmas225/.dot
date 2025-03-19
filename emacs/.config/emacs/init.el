@@ -187,11 +187,16 @@
    ("C-M-g" . #'keyboard-quit)
    ("C-M-o" . #'backward-up-list)
    ("C-M-u" . #'up-list)
+   ("C-S-k" . #'my/backward-kill-line)
+   ("C-S-l" . #'my/horizontal-recenter)
    ("C-S-o" . #'open-line)
    ("M-=" . #'count-words)
    ("<f2>" . nil)           ;default: 2C-mode
    ("<f8>" . #'repeat)
    ("<f10>" . nil)  ;default: context menu
+   ;; indentation
+   ("S-<left>" . #'indent-rigidly-left-to-tab-stop)
+   ("S-<right>" . #'indent-rigidly-right-to-tab-stop)
    ;; casing
    ("M-c" . #'capitalize-dwim)
    ("M-l" . #'downcase-dwim)
@@ -226,14 +231,19 @@
       (if (< mid cur)
           (set-window-hscroll (selected-window)
                               (- cur mid)))))
-  (keymap-global-set "C-S-l" #'my/horizontal-recenter)
-
+  
   (defun my/scroll-right-half-window ()
     (interactive)
     (scroll-right (/ (window-width) 2)))
   (defun my/scroll-left-half-window ()
     (interactive)
-    (scroll-left (/ (window-width) 2))))
+    (scroll-left (/ (window-width) 2)))
+
+  (defun my/backward-kill-line (&optional arg)
+    (interactive "P")
+    (if arg
+        (kill-line (- arg))
+      (kill-line 0))))
 
 ;; bookmark
 (use-package bookmark
@@ -243,6 +253,12 @@
   (bookmark-fringe-mark nil)   ;emacs 29
   (bookmark-save-flag 1)       ;save to file for every bookmark change
   )
+
+;; compile-mode
+(use-package compile
+  :ensure nil
+  :bind
+  ("C-z" . #'compile))
 
 (use-package delsel
   :ensure nil
