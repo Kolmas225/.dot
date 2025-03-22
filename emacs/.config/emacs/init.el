@@ -156,6 +156,7 @@
   (kill-do-not-save-duplicates t)
   (mode-require-final-newline 'visit-save)
   (delete-pair-blink-delay 0.1)   ;don't really use delete-pair tho
+  (global-auto-revert-mode t)
   ;; disable the annoying backup files
   (make-backup-files nil)
   (create-lockfiles nil)
@@ -176,6 +177,8 @@
   ;; browse-url
   (browse-url-browser-function #'browse-url-firefox)
   (browse-url-firefox-program "firefox-flatpak-private")
+  ;; emacs 30+: disable ispell completion function in favour of `cape-dict'
+  (text-mode-ispell-word-completion nil)
   :hook
   (after-init . column-number-mode)
   (after-init . minibuffer-depth-indicate-mode)
@@ -257,8 +260,14 @@
 ;; compile-mode
 (use-package compile
   :ensure nil
+  :custom
+  (compilation-always-kill t)
+  (compilation-scroll-output t)
   :bind
-  ("C-z" . #'compile))
+  ("<f5>" . #'recompile)
+  ("C-<f5>" . #'compile)
+  :config
+  (add-hook 'compilation-filter-hook #'ansi-color-compilation-filter))
 
 (use-package delsel
   :ensure nil
@@ -498,7 +507,8 @@ mouse-3: go to end")))
   :ensure nil
   :custom
   (display-line-numbers-type 'relative)
-  (display-line-numbers-width 3)
+  (display-line-numbers-width-start t)
+  (display-line-numbers-widen t)
   :hook
   ((prog-mode conf-mode) . #'display-line-numbers-mode))
 
@@ -643,7 +653,6 @@ mouse-3: go to end")))
   ("M-'" . #'consult-register-store)
   ("M-#" . #'consult-register-load)
   ([remap bookmark-jump] . #'consult-bookmark)
-  ("C-c f r" . #'consult-recent-file)
   (:map search-map
         ("M-s" . #'consult-line)
         ("s" . #'consult-line-multi)
@@ -660,7 +669,8 @@ mouse-3: go to end")))
         ("M-e" . #'consult-compile-error)
         ("M-j" . #'consult-mark)
         ("j" . #'consult-global-mark)
-        ("M-o" . #'consult-outline))
+        ("M-o" . #'consult-outline)
+        ("M-r" . #'consult-recent-file))
   :init
   
   ;; Optionally configure the register formatting. This improves the register
@@ -1344,6 +1354,8 @@ Used to preselect nearest headings and imenu items.")
   (org-startup-folded "show2levels")
   (org-startup-indented t)
   (org-hide-emphasis-markers t)
+  (org-refile-targets '((nil :maxlevel . 3)))
+  (org-archive-location "~/Documents/org/archive.org::* From %s")
   :bind
   ("C-c l s" . #'org-store-link)
   ("C-M-<return>" . #'org-insert-subheading)
