@@ -211,7 +211,9 @@
          ("o x" . #'scratch-buffer)
          ("t v" . #'visual-line-mode))
    (:map ctl-x-map
-         ("k" . #'kill-current-buffer)))
+         ("k" . #'kill-current-buffer))
+   (:map ctl-x-r-map
+         ("M-d" . #'my/clear-all-registers)))
   :config
   ;; Add prompt indicator to `completing-read-multiple'.
   ;; We display [CRM<separator>], e.g., [CRM,] if the separator is a comma.
@@ -246,7 +248,13 @@
     (interactive "P")
     (if arg
         (kill-line (- arg))
-      (kill-line 0))))
+      (kill-line 0)))
+
+  (defun my/clear-all-registers ()
+    "Clear all registers"
+    (interactive)
+    (setq register-alist nil)
+    (message "All registers are cleared!")))
 
 ;; bookmark
 (use-package bookmark
