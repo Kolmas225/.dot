@@ -1741,15 +1741,8 @@ Used to preselect nearest headings and imenu items.")
 (use-package just-mode)
 (use-package justl)
 
+
 ;;; Ruby
-
-(use-package robe
-  :hook
-  (ruby-mode . robe-mode)
-  :bind
-  (:map robe-mode-map
-        ("C-c M-j" . #'robe-start)))
-
 (use-package ruby-mode
   :ensure nil
   :custom
@@ -1757,20 +1750,30 @@ Used to preselect nearest headings and imenu items.")
   :hook
   ;; FIXME Disabling popupinfo until this resolves
   ;; https://github.com/dgutov/robe/issues/144
-  (ruby-mode . (lambda () (setq-local corfu-popupinfo-delay '(nil . 0.2))))
-  (ruby-mode . flymake-mode)
-  (ruby-mode . indent-bars-mode)
-  (ruby-mode . subword-mode)
+  (ruby-base-mode . (lambda () (setq-local corfu-popupinfo-delay '(nil . 0.2))))
+  (ruby-base-mode . flymake-mode)
+  (ruby-base-mode . indent-bars-mode)
+  (ruby-base-mode . subword-mode)
   :config
   (with-eval-after-load 'apheleia
     (setf (alist-get 'ruby-mode apheleia-mode-alist)
-          '(rubocop))))
+          '(rubocop))
+    (setf (alist-get 'ruby-ts-mode apheleia-mode-alist)
+          '(rubocop)))
+  (add-to-list 'eglot-server-programs '(ruby-base-mode "ruby-lsp")))
 
 (use-package ruby-end
   :ensure
   (:host github :repo "Kolmas225/ruby-end.el" :files ("*.el"))
   :custom
   (ruby-end-insert-newline nil))
+
+(use-package robe
+  :bind
+  (:map robe-mode-map
+        ("C-c M-j" . #'robe-start))
+  :init
+  (global-robe-mode))
 
 (use-package inf-ruby
   :custom
