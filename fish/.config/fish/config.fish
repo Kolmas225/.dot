@@ -18,7 +18,7 @@ if status is-interactive
     abbr -a ecc emacsclient -nc
     abbr -a ect emacsclient -t
     abbr -a imgcat wezterm imgcat
-    
+
     if [ (command -v helix) ]
         set -gx EDITOR helix
         abbr -a hl helix
@@ -37,15 +37,13 @@ if status is-interactive
         rm -f -- "$tmp"
     end
 
-    function ghgit
-        git config user.name Kolmas225
-        git config user.email "169401425+Kolmas225@users.noreply.github.com"
+    function gitconf
+        git config user.name $argv[1]
+        git config user.email $argv[2]
     end
 
-    function cbgit
-        git config user.name Kolmas
-        git config user.email "kolmas@noreply.codeberg.org"
-    end
+    abbr -a ghgit gitconf Kolmas225 "169401425+Kolmas225@users.noreply.github.com"
+    abbr -a cbgit gitconf Kolmas "kolmas@noreply.codeberg.org"
 
     # TODO now works in fish 4.0
     function fish_should_add_to_history
