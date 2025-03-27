@@ -445,7 +445,6 @@
 (use-package catppuccin-theme
   :custom
   (catppuccin-flavor 'macchiato)
-  (catppuccin-enlarge-headings nil)
   (catppuccin-highlight-matches t)
   :config
   (load-theme 'catppuccin :no-confirm))
