@@ -1878,6 +1878,11 @@ When `switch-to-buffer-obey-display-actions' is non-nil,
   :ensure nil
   :bind
   ("C-c o r p" . run-python)
+  (:repeat-map my/python-indent-map
+               ("<" . #'python-indent-shift-left)
+               (">" . #'python-indent-shift-right))
+  :hook
+  (python-base-mode . (lambda () (setq-local tab-always-indent t)))
   :init
   (add-to-list 'major-mode-remap-alist '(python-mode . python-ts-mode))
   ;; :config
