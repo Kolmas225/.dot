@@ -1676,7 +1676,11 @@ When `switch-to-buffer-obey-display-actions' is non-nil,
 (use-package project
   :ensure nil
   :custom
-  (project-list-file (expand-file-name "projects" user-cache-directory)))
+  (project-list-file (expand-file-name "projects" user-cache-directory))
+  :bind
+  (:map project-prefix-map
+        ("c" . #'project-recompile)
+        ("C-c" . #'project-compile)))
 
 (use-package flymake
   :ensure nil)
