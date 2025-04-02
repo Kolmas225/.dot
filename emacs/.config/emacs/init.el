@@ -170,8 +170,10 @@
   (save-interprogram-paste-before-kill t)
   (scroll-preserve-screen-position t)
   (scroll-conservatively 10)
-  ;; show tab bar when > 1 tab
-  (tab-bar-show 1)
+  ;; tab-bar
+  (tab-bar-show t)
+  (tab-bar-new-tab-choice "*scratch*")
+  (tab-bar-auto-width nil)
   ;; prefer spaces to tabs
   (indent-tabs-mode nil)
   ;; browse-url
@@ -462,6 +464,7 @@
   (doom-modeline-enable-word-count t)
   (doom-modeline-total-line-number t)
   (doom-modeline-battery t)
+  (doom-modeline-workspace-name nil)
   :config
   (doom-modeline-mode))
 
@@ -1687,6 +1690,25 @@ When `switch-to-buffer-obey-display-actions' is non-nil,
   (:map project-prefix-map
         ("c" . #'project-recompile)
         ("C-c" . #'project-compile)))
+
+;; Prevent `edebug' default bindings from interfering.
+(setq edebug-inhibit-emacs-lisp-mode-bindings t)
+(use-package activities
+  :init
+  (activities-mode)
+  (activities-tabs-mode)
+  :bind
+  (("C-x C-a C-n" . activities-new)
+   ("C-x C-a C-d" . activities-define)
+   ("C-x C-a C-a" . activities-resume)
+   ("C-x C-a C-s" . activities-suspend)
+   ("C-x C-a C-k" . activities-kill)
+   ("C-x C-a RET" . activities-switch)
+   ("C-x C-a b" . activities-switch-buffer)
+   ("C-x C-a g" . activities-revert)
+   ("C-x C-a l" . activities-list)
+   ("C-x C-a r" . activities-rename)
+   ("C-x C-a C-<backspace>" . activities-discard)))
 
 (use-package flymake
   :ensure nil)
