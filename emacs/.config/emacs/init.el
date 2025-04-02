@@ -1383,6 +1383,11 @@ When `switch-to-buffer-obey-display-actions' is non-nil,
   (org-hide-emphasis-markers t)
   (org-refile-targets '((nil :maxlevel . 3)))
   (org-archive-location "~/Documents/org/archive.org::* From %s")
+  (org-auto-align-tags nil)
+  (org-tags-column 0)
+  (org-special-ctrl-a/e t)
+  (org-special-ctrl-k t)
+  (org-pretty-entities t)
   :bind
   ("C-c l s" . #'org-store-link)
   ("C-M-<return>" . #'org-insert-subheading)
@@ -1425,6 +1430,7 @@ When `switch-to-buffer-obey-display-actions' is non-nil,
   :after org
   :custom
   (org-agenda-files (list org-directory))
+  (org-agenda-tags-column 0)
   :bind
   (:map mode-specific-map
         ("a a" . #'org-agenda))
