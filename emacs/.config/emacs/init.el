@@ -707,51 +707,7 @@ mouse-3: go to end")))
      (lambda (str) (orderless--highlight input t str))))
 
   ;; OPTION 1: Activate globally for all consult-grep/ripgrep/find/...
-  (setq consult--regexp-compiler #'consult--orderless-regexp-compiler)
-
-  ;; Pre-select nearest heading for consult-org-heading and
-  ;; consult-outline using vertico
-  ;; https://github.com/minad/consult/discussions/891
-  (defvar consult--previous-point nil
-    "Location of point before entering minibuffer.
-Used to preselect nearest headings and imenu items.")
-
-  (defvar vertico--previous-input nil
-    "Previous vertico input so we can distinguish whether user is changing input string.")
-
-  (defun consult--set-previous-point (&rest _)
-    "Save location of point. Used before entering the minibuffer."
-    (setq vertico--previous-input nil)
-    (setq consult--previous-point (point)))
-
-  (advice-add #'consult-org-heading :before #'consult--set-previous-point)
-  (advice-add #'consult-outline :before #'consult--set-previous-point)
-
-  (advice-add #'vertico--update :after #'consult-vertico--update-choose)
-
-  (defun consult-vertico--update-choose (&rest _)
-    "Pick the nearest candidate rather than the first after updating candidates."
-    ;; we only select the closest heading if the user is changing filter string
-    ;; this happens at invocation, and as the user filters
-    ;; as they filter, we want to keep on selecting (if possible) the heading they were closest to
-    (when (and (memq current-minibuffer-command
-                     '(consult-org-heading consult-outline))
-               (not (equal vertico--input vertico--previous-input)))
-      (setq vertico--previous-input (copy-tree vertico--input))
-      (setq vertico--index
-            (max 0 ; if none above, choose the first below
-                 (1- (or (seq-position
-                          vertico--candidates
-                          consult--previous-point
-                          (lambda (cand point-pos) ; counts on candidate list being sorted
-                            (> (cl-case current-minibuffer-command
-                                 (consult-outline
-                                  (car (consult--get-location cand)))
-                                 (consult-org-heading
-                                  ;; cpbotha's work-around, see https://github.com/minad/consult/discussions/891
-                                  (get-text-property 0 'org-marker cand)))
-                               point-pos)))
-                         (length vertico--candidates))))))))
+  (setq consult--regexp-compiler #'consult--orderless-regexp-compiler))
 
 (use-package consult-dir
   :custom
