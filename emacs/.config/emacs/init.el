@@ -1939,5 +1939,25 @@ When `switch-to-buffer-obey-display-actions' is non-nil,
   ("\\.erb\\'" . web-mode)
   ("\\.html?\\'" . web-mode))
 
+(use-package gptel
+  :preface
+  (gptel-make-ollama "Ollama"
+    :host "localhost:11434"
+    :stream t
+    :models '(gemma3:4b))
+  :custom
+  (gptel-model 'gemma3:4b)
+  (gptel-backend (gptel-get-backend "Ollama"))
+  (gptel-default-mode 'org-mode)
+  (gptel-org-branching-context t)
+  :bind
+  ("C-c g g" . #'gptel-menu)
+  ("C-c g b" . #'gptel)
+  ("C-c g s" . #'gptel-send)
+  ("C-c g r" . #'gptel-rewrite)
+  :config
+  (setf (alist-get 'org-mode gptel-prompt-prefix-alist) "@user\n")
+  (setf (alist-get 'org-mode gptel-response-prefix-alist) "@assistant\n"))
+
 (provide 'init)
 ;;; init.el ends here
