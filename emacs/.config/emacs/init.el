@@ -1125,6 +1125,11 @@ When `switch-to-buffer-obey-display-actions' is non-nil,
 	      (?\M-o aw-flip-window)	;M-o M-o
 	      (?? aw-show-dispatch-help "Show help"))))
 
+(use-package transpose-frame
+  :bind
+  (:map ctl-x-4-map
+        ("t" . #'transpose-frame)))
+
 ;;; easy-kill
 (use-package easy-kill
   :bind
