@@ -279,11 +279,31 @@
   :custom
   (compilation-always-kill t)
   (compilation-scroll-output t)
+  (compilation-auto-jump-to-first-error t)
   :bind
   ("<f5>" . #'recompile)
   ("C-<f5>" . #'compile)
   :config
-  (add-hook 'compilation-filter-hook #'ansi-color-compilation-filter))
+  (add-hook 'compilation-filter-hook #'ansi-color-compilation-filter)
+
+  ;; ref: https://github.com/LionyxML/emacs-solo/blob/df3354b01ef9128a70d7213805e6d5ef63209d4e/init.el#L240C3-L242C80
+  (defun my/ignore-compilation-status (&rest _)
+    (setq compilation-in-progress nil))
+  (advice-add 'compilation-start :after #'my/ignore-compilation-status))
+
+(use-package compile-multi
+  :custom
+  (compile-multi-default-directory #'my/project-root-or-current-directory)
+  :bind
+  ("M-<f5>" . #'compile-multi))
+(use-package consult-compile-multi
+  :after compile-multi
+  :config (consult-compile-multi-mode))
+(use-package compile-multi-nerd-icons
+  :after (compile-multi nerd-icons-completion))
+(use-package compile-multi-embark
+  :after (compile-multi embark)
+  :config (compile-multi-embark-mode))
 
 (use-package delsel
   :ensure nil
