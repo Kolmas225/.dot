@@ -1902,6 +1902,8 @@ When `switch-to-buffer-obey-display-actions' is non-nil,
 ;;; Python
 (use-package python
   :ensure nil
+  :custom
+  (python-indent-guess-indent-offset-verbose nil)
   :bind
   ("C-c o r p" . run-python)
   (:repeat-map my/python-indent-map
