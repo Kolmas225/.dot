@@ -77,6 +77,12 @@
   (interactive)
   (find-file (expand-file-name "init.el" user-emacs-directory)))
 
+(defun my/project-root-or-current-directory ()
+  "Return project root or current directory."
+  (or (and (project-current)
+           (project-root (project-current)))
+      default-directory))
+
 (defun my/open-line-and-indent (n)
   "Like `newline-and-indent' for the `open-line' command."
   (interactive "*p")
