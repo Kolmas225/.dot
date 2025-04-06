@@ -201,6 +201,7 @@
    ("C-S-k" . #'my/backward-kill-line)
    ("C-S-l" . #'my/horizontal-recenter)
    ("C-S-o" . #'open-line)
+   ("M-z" . nil)                        ;default: zap-to-char
    ("M-=" . #'count-words)
    ("<f2>" . nil)           ;default: 2C-mode
    ("<f8>" . #'repeat)
@@ -1710,7 +1711,13 @@ When `switch-to-buffer-obey-display-actions' is non-nil,
   (eglot-autoshutdown t)
   :bind
   (:map eglot-mode-map
-        ("C-c C-;" . #'eglot-code-actions)))
+        ("M-z M-;" . #'eglot-code-actions)
+        ("M-z M-r" . #'eglot-rename)
+        ("M-z M-d" . #'eglot-find-declaration)
+        ("M-z M-t" . #'eglot-find-typeDefinition)
+        ("M-z M-i" . #'eglot-find-implementation)
+        ("M-z M-q" . #'eglot-shutdown)
+        ("M-z C-M-q" . #'eglot-shutdown-all)))
 
 (use-package consult-eglot
   :after eglot
