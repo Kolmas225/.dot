@@ -822,18 +822,15 @@ mouse-3: go to end")))
         ("C-." . #'corfu-quick-complete)))
 
 (use-package cape
+  :custom
+  (cape-dabbrev-min-length 5)
   :bind
-  ("M-/" . #'cape-dabbrev)
   ("C-c /" . cape-prefix-map)
   :init
   
   (defun my/elisp-setup-capf ()
     (setq-local completion-at-point-functions
-                `(,(cape-capf-super
-                    #'cape-elisp-symbol
-                    #'cape-dabbrev)
-                  t)
-                cape-dabbrev-min-length 5))
+                '(cape-elisp-symbol t)))
   (add-hook 'emacs-lisp-mode-hook #'my/elisp-setup-capf)
 
   (defun my/elisp-block-capf ()
@@ -845,17 +842,11 @@ mouse-3: go to end")))
 
   ;; eglot
   (advice-add 'eglot-completion-at-point :around #'cape-wrap-buster)
-  
-  ;; (defun my/eglot-setup-capf ()
-  ;;   (setq-local completion-at-point-functions
-  ;;               (list (cape-super-capf
-  ;;                      #'eglot-completion-at-point
-  ;;                      #'tempel-expand))))
-  ;; (add-hook 'eglot-managed-mode-hook #'my/eglot-setup-capf)
-  
+
   (dolist (capfs '(cape-keyword
                    cape-file
-                   cape-dict))
+                   cape-dict
+                   cape-dabbrev))
     (add-to-list 'completion-at-point-functions capfs t)))
 
 ;;; Eldoc
