@@ -1178,6 +1178,7 @@ When `switch-to-buffer-obey-display-actions' is non-nil,
   (regexp-search-ring-max 50)
   (lazy-count-prefix-format "[%s/%s] ")
   (isearch-repeat-on-direction-change t)
+  (isearch-wrap-pause nil)      ;not needed with `isearch-mb' keybinds
   :bind
   (:map isearch-mb-minibuffer-map
         ("M-e"  . #'consult-isearch-history)
