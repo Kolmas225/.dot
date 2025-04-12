@@ -1450,15 +1450,8 @@ When `switch-to-buffer-obey-display-actions' is non-nil,
   (org-edit-src-content-indentation 0)
   ;; trust the programmer, it can never go wrong
   (org-confirm-babel-evaluate nil)
-  (org-babel-default-header-args
-   '((:session . "none")
-     (:results . "replace")
-     (:exports . "code")
-     (:cache . "no")
-     (:noweb . "strip-export")
-     (:hlines . "no")
-     (:tangle . "no")))
   :config
+  (setf (alist-get :noweb org-babel-default-header-args) "strip-export")
   (add-to-list 'org-babel-tangle-lang-exts '("scheme" . "scm"))
   (add-to-list 'org-src-lang-modes '("sh" . bash-ts))
   (add-to-list 'org-src-lang-modes '("bash" . bash-ts))
