@@ -1448,7 +1448,6 @@ When `switch-to-buffer-obey-display-actions' is non-nil,
   :custom
   (org-src-preserve-indentation nil)
   (org-edit-src-content-indentation 0)
-  (org-babel-clojure-backend 'babashka)
   ;; trust the programmer, it can never go wrong
   (org-confirm-babel-evaluate nil)
   (org-babel-default-header-args
@@ -1937,7 +1936,8 @@ When `switch-to-buffer-obey-display-actions' is non-nil,
 (use-package cider
   :custom
   (cider-jack-in-default 'babashka)
-  (cider-repl-display-help-banner nil))
+  (cider-repl-display-help-banner nil)
+  (org-babel-clojure-backend 'cider))
 
 ;;; Janet
 (use-package janet-ts-mode
