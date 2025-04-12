@@ -1136,6 +1136,18 @@ When `switch-to-buffer-obey-display-actions' is non-nil,
      nil "[ace-window]")
     (message "Use `ace-window' to display next command buffer..."))
   
+  (defun my/aw-kill-buffer (window)
+    "Select a window with ace-window and kill the buffer."
+    (interactive)
+    (with-selected-window window
+      (kill-buffer)))
+  
+  (defun my/aw-kill-buffer-and-window (window)
+    "Select a window with ace-window and kill the buffer and window."
+    (interactive)
+    (with-selected-window window
+      (kill-buffer-and-window)))
+  
   (setq aw-dispatch-alist
 	    '((?m aw-swap-window "Swap Window")
 	      (?M aw-move-window "Move Window")
@@ -1148,6 +1160,8 @@ When `switch-to-buffer-obey-display-actions' is non-nil,
 	      (?h aw-split-window-vert "Split Vert Window")
 	      (?v aw-split-window-horz "Split Horz Window")
 	      (?o delete-other-windows "Delete Other Windows")
+          (?k my/aw-kill-buffer "Kill Current Buffer")
+          (?K my/aw-kill-buffer-and-window "Kill Buffer and Window")
 	      (?T aw-transpose-frame "Transpose Frame")
 	      (?\M-o aw-flip-window)	;M-o M-o
 	      (?? aw-show-dispatch-help "Show help"))))
