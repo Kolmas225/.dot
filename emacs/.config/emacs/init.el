@@ -173,7 +173,9 @@
   (mark-ring-max 8)
   (global-mark-ring-max 10)
   (kill-ring-max 50)
+  (history-delete-duplicates t)
   (save-interprogram-paste-before-kill t)
+  ;; scrolling
   (scroll-preserve-screen-position t)
   (scroll-conservatively 10)
   ;; tab-bar
@@ -220,7 +222,8 @@
          ("o x" . #'scratch-buffer)
          ("t v" . #'visual-line-mode))
    (:map ctl-x-map
-         ("k" . #'kill-current-buffer))
+         ("k" . #'kill-current-buffer)
+         ("M-t" . #'transpose-sentences))
    (:map ctl-x-r-map
          ("M-d" . #'my/clear-all-registers)))
   :config
@@ -344,6 +347,7 @@
   :init
   (repeat-mode 1))
 
+;; TODO: History persistance
 (use-package savehist
   :ensure nil
   :custom
@@ -375,7 +379,9 @@
           space-mark tab-mark
           missing-newline-at-eof
           space-before-tab
-          space-after-tab)))
+          space-after-tab))
+  :bind
+  ("C-c t SPC" . #'whitespace-mode))
 
 (use-package winner
   :ensure nil
@@ -395,7 +401,9 @@
   ([remap describe-variable] . #'helpful-variable)
   ([remap describe-command] . #'helpful-command)
   ([remap describe-key] . #'helpful-key)
-  ([remap describe-symbol] . #'helpful-symbol))
+  ([remap describe-symbol] . #'helpful-symbol)
+  (:map emacs-lisp-mode-map
+        ("C-h C-." . #'helpful-at-point)))
 
 (use-package elisp-demos
   :init
@@ -484,7 +492,8 @@
   (catppuccin-flavor 'macchiato)
   (catppuccin-highlight-matches t)
   :config
-  (load-theme 'catppuccin :no-confirm))
+  (load-theme 'catppuccin :no-confirm)
+  (set-face-attribute 'secondary-selection nil :background (catppuccin-color 'overlay0)))
 
 (use-package doom-modeline
   :custom
@@ -1531,6 +1540,8 @@ When `switch-to-buffer-obey-display-actions' is non-nil,
   ("C-c n d" . #'denote-sort-dired)
   ;; keywords
   ("C-c n w" . #'denote-rename-file-keywords)
+  ;; template
+  ("C-c n t" . #'denote-template)
   (:map dired-mode-map
         ("r r" . #'denote-dired-rename-files)
         ("r w" . #'denote-dired-rename-marked-files-with-keywords))
@@ -1674,6 +1685,8 @@ When `switch-to-buffer-obey-display-actions' is non-nil,
 ;; Prevent `edebug' default bindings from interfering.
 (setq edebug-inhibit-emacs-lisp-mode-bindings t)
 (use-package activities
+  :custom
+  (activities-kill-buffers t)
   :init
   (activities-mode)
   (activities-tabs-mode)
@@ -1829,6 +1842,7 @@ When `switch-to-buffer-obey-display-actions' is non-nil,
   :bind
   ("C-c o r r" . inf-ruby)
   (:map inf-ruby-minor-mode-map
+        ("C-c M-s" . #'inf-ruby-console-auto)
         ("C-c C-c" . #'ruby-send-buffer)
         ("C-c M-q" . #'my/ruby-reset))
   :config
