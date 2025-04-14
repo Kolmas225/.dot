@@ -1108,12 +1108,6 @@ mouse-3: go to end")))
   ("M-o" . #'ace-window)
   ("M-O" . #'ace-window-prefix)
   :config
-
-  (defun my/ace-window-split-frame-if-single-window (&rest _)
-    "Split the frame only when there's only 1 window."
-    (unless (> (count-windows nil 'visible) 1)
-      (split-window-sensibly)))
-  (advice-add #'ace-window :before #'my/ace-window-split-frame-if-single-window)
   
   (advice-add #'aw--switch-buffer :override
 	          (lambda () (consult-buffer)))
