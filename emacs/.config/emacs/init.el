@@ -1097,10 +1097,13 @@ mouse-3: go to end")))
 
 
 (use-package ace-window
+  :ensure
+  (:host github :repo "Kolmas225/ace-window" :branch "fork" :files ("*.el"))
   :custom
   (aw-dispatch-always t)
   (aw-scope 'frame)
   (aw-keys '(?n ?e ?i ?a ?t ?s ?r ?c))
+  (aw-leading-char-style 'path)
   (ace-window-display-mode t)	     ;display dispatch char at modeline
   :custom-face
   (aw-leading-char-face ((nil (:foreground unspecified :inherit avy-lead-face))))
@@ -1132,13 +1135,11 @@ When `switch-to-buffer-obey-display-actions' is non-nil,
   
   (defun my/aw-kill-buffer (window)
     "Select a window with ace-window and kill the buffer."
-    (interactive)
     (with-selected-window window
       (kill-buffer)))
   
   (defun my/aw-kill-buffer-and-window (window)
     "Select a window with ace-window and kill the buffer and window."
-    (interactive)
     (with-selected-window window
       (kill-buffer-and-window)))
   
