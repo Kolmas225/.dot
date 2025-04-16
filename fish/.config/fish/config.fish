@@ -45,6 +45,9 @@ if status is-interactive
     abbr -a ghgit gitconf Kolmas225 "169401425+Kolmas225@users.noreply.github.com"
     abbr -a cbgit gitconf Kolmas "kolmas@noreply.codeberg.org"
 
+    # Go to git root directory
+    abbr -a cdgr 'cd (git rev-parse --show-toplevel)'
+
     # TODO now works in fish 4.0
     function fish_should_add_to_history
         # for cmd in vault mysql ls
