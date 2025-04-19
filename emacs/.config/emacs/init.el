@@ -71,6 +71,32 @@
               (kill-buffer)))
       (message "Not a file visiting buffer!"))))
 
+;; modified from https://stackoverflow.com/a/25212377
+(defun my/rename-current-buffer-file ()
+  "Renames current buffer and file it is visiting."
+  (interactive)
+  (let* ((name (buffer-name))
+         (filename (buffer-file-name))
+         (basename (and filename (file-name-nondirectory filename))))
+    (if (not (and filename (file-exists-p filename)))
+        (error "Buffer '%s' is not visiting a file!" name)
+      (let ((new-name (read-file-name "Rename to: " (file-name-directory filename) basename nil basename)))
+        (if (get-buffer new-name)
+            (error "A buffer named '%s' already exists!" new-name)
+          (rename-file filename new-name 1)
+          (rename-buffer new-name)
+          (set-visited-file-name new-name)
+          (set-buffer-modified-p nil)
+          (message "File '%s' successfully renamed to '%s'"
+                   name (file-name-nondirectory new-name)))))))
+
+(defun my/rename-current-or-write-new-file (&optional arg)
+  "Write to new file / Rename current buffer file (when C-u)"
+  (interactive "P")
+  (if arg 
+      (call-interactively #'my/rename-current-buffer-file)
+    (call-interactively #'write-file)))
+
 ;; MAYBE use consult maybe
 (defun my/emacs-config ()
   "Emacs config."
@@ -223,7 +249,8 @@
          ("t v" . #'visual-line-mode))
    (:map ctl-x-map
          ("k" . #'kill-current-buffer)
-         ("M-t" . #'transpose-sentences))
+         ("M-t" . #'transpose-sentences)
+         ("C-w" . #'my/rename-current-or-write-new-file))
    (:map ctl-x-r-map
          ("M-d" . #'my/clear-all-registers)))
   :config
