@@ -103,12 +103,6 @@
   (interactive)
   (find-file (expand-file-name "init.el" user-emacs-directory)))
 
-(defun my/project-root-or-current-directory ()
-  "Return project root or current directory."
-  (or (and (project-current)
-           (project-root (project-current)))
-      default-directory))
-
 (defun my/open-line-and-indent (n)
   "Like `newline-and-indent' for the `open-line' command."
   (interactive "*p")
@@ -310,7 +304,7 @@
   :custom
   (compilation-always-kill t)
   (compilation-scroll-output t)
-  (compilation-auto-jump-to-first-error t)
+  ;; (compilation-auto-jump-to-first-error t)
   :bind
   ("<f5>" . #'recompile)
   ("C-<f5>" . #'compile)
@@ -323,10 +317,21 @@
   (advice-add 'compilation-start :after #'my/ignore-compilation-status))
 
 (use-package compile-multi
-  :custom
-  (compile-multi-default-directory #'my/project-root-or-current-directory)
   :bind
-  ("M-<f5>" . #'compile-multi))
+  ("M-<f5>" . #'compile-multi)
+  (:map project-prefix-map
+        ("M-c" . #'my/project-compile-multi))
+  :config
+  (defun my/project-compile-multi (&optional query command)
+    "`compile-multi' on project root"
+    (interactive)
+    (let ((compile-multi-default-directory
+           (lambda ()
+             (or (and (project-current nil)
+                      (project-root (project-current nil)))
+                 default-directory))))
+      (compile-multi query command))))
+
 (use-package consult-compile-multi
   :after compile-multi
   :config (consult-compile-multi-mode))
