@@ -330,7 +330,15 @@
              (or (and (project-current nil)
                       (project-root (project-current nil)))
                  default-directory))))
-      (compile-multi query command))))
+      (compile-multi query command)))
+
+  (push `(ruby-base-mode
+          ("ruby:file" "ruby" (buffer-file-name)))
+        compile-multi-config)
+  (push '((file-exists-p "Rakefile")
+          ("rake:default" . "rake default")
+          ("rake:test" . "rake test"))
+        compile-multi-config))
 
 (use-package consult-compile-multi
   :after compile-multi
