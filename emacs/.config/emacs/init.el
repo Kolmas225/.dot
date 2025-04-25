@@ -793,12 +793,13 @@ mouse-3: go to end")))
         ("C-x C-d" . #'consult-dir)
         ("C-x C-j" . #'consult-dir-jump-file)))
 
-;; BUG: have some bugs
 (use-package consult-todo
   :bind
   (:map search-map
-        ("t" . #'consult-todo)
-        ("M-t" . #'consult-todo-all)))
+        ("t t" . #'consult-todo)
+        ("t d" . #'consult-todo-dir)
+        ("t p" . #'consult-todo-project)
+        ("t a" . #'consult-todo-all)))
 
 (use-package embark
   :custom
