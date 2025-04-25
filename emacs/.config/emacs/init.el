@@ -160,7 +160,15 @@
 
 ;;; epa
 (use-package epa
-  :ensure nil)
+  :ensure nil
+  :custom
+  (epg-pinentry-mode 'loopback)
+  (epa-keys-select-method 'minibuffer)
+  :bind
+  ("C-c : e" . #'epa-encrypt-region)
+  ("C-c : d" . #'epa-decrypt-region)
+  ("C-c : s" . #'epa-sign-region)
+  ("C-c : v" . #'epa-verify-region))
 
 ;; built-in
 (use-package emacs
