@@ -1966,5 +1966,48 @@ When `switch-to-buffer-obey-display-actions' is non-nil,
   (setf (alist-get 'org-mode gptel-prompt-prefix-alist) "@user\n")
   (setf (alist-get 'org-mode gptel-response-prefix-alist) "@assistant\n"))
 
+(use-package dash-docs
+  :hook
+  (ruby-base-mode . (lambda () (setq-local dash-docs-docsets '("Ruby" "Ruby on Rails"))))
+  (python-base-mode . (lambda () (setq-local dash-docs-docsets '("Python 3"))))
+  (web-mode . (lambda () (setq-local dash-docs-docsets '("HTML" "CSS" "JavaScript"))))
+  (css-mode . (lambda () (setq-local dash-docs-docsets '("HTML" "CSS"))))
+  (js-mode . (lambda () (setq-local dash-docs-docsets '("JavaScript"))))
+  :config
+  ;; FIXME: https://github.com/dash-docs-el/dash-docs/issues/20
+  (defun dash-docs-sql (db-path sql)
+    "Run in the db located at DB-PATH the SQL command and parse the results.
+If there are errors, print them in `dash-docs-debugging-buffer'"
+    (dash-docs-parse-sql-results
+     (with-output-to-string
+       (let ((error-file (when dash-docs-enable-debugging
+                           (make-temp-file "dash-docs-errors-file"))))
+         (call-process "sqlite3" nil (list standard-output error-file) nil
+                       ;; args for sqlite3:
+                       "-list" db-path sql)
+
+         ;; display errors, stolen from emacs' `shell-command` function
+         (when (and error-file (file-exists-p error-file))
+           (if (< 0 (nth 7 (file-attributes error-file)))
+               (with-current-buffer (dash-docs-debugging-buffer)
+                 (let ((pos-from-end (- (point-max) (point))))
+                   (or (bobp)
+                       (insert "\f\n"))
+                   ;; Do no formatting while reading error file,
+                   ;; because that can run a shell command, and we
+                   ;; don't want that to cause an infinite recursion.
+                   (format-insert-file error-file nil)
+                   ;; Put point after the inserted errors.
+                   (goto-char (- (point-max) pos-from-end)))
+                 (display-buffer (current-buffer))))
+           (delete-file error-file)))))))
+
+(use-package consult-dash
+  :bind
+  ("M-s M-d" . consult-dash)
+  :config
+  ;; Use the symbol at point as initial search term
+  (consult-customize consult-dash :initial (thing-at-point 'symbol)))
+
 (provide 'init)
 ;;; init.el ends here
