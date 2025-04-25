@@ -615,8 +615,6 @@ mouse-3: go to end")))
   :config
   (global-page-break-lines-mode))
 
-;; (use-package transpose-frame)
-
 ;; nerd-icons
 (use-package nerd-icons
   :custom
@@ -638,14 +636,6 @@ mouse-3: go to end")))
 (use-package nerd-icons-dired
   :hook
   (dired-mode . nerd-icons-dired-mode))
-
-;; (use-package visual-fill-column
-;;   :bind
-;;   ("C-c t v" . visual-fill-column-mode)
-;;   :init
-;;   ;; (global-visual-fill-column-mode 1)
-;;   (setq-default visual-fill-column-center-text t)
-;;   (setq visual-fill-column-fringes-outside-margins t))
 
 ;;; Completion
 
@@ -1252,12 +1242,6 @@ When `switch-to-buffer-obey-display-actions' is non-nil,
   (add-to-list 'isearch-mb--after-exit #'avy-isearch)
   (add-to-list 'isearch-mb--after-exit #'consult-line))
 
-;;; symbol-overlay
-(use-package symbol-overlay
-  :bind
-  ("M-n" . #'symbol-overlay-jump-next)
-  ("M-p" . #'symbol-overlay-jump-prev))
-
 ;;; eshell
 (use-package eshell
   :ensure nil
@@ -1539,9 +1523,6 @@ When `switch-to-buffer-obey-display-actions' is non-nil,
   ;; HACK https://github.com/jdtsmith/org-modern-indent/issues/10#issuecomment-1671726529
   (add-hook 'org-mode-hook (lambda () (aset org-indent--text-line-prefixes 0 (propertize " " 'face 'org-indent)))))
 
-;; for codeblock highlighting in exporting to html
-(use-package htmlize)
-
 ;; scrolling through inline image in org-mode
 (use-package org-sliced-images
   :custom
@@ -1780,10 +1761,6 @@ When `switch-to-buffer-obey-display-actions' is non-nil,
   :init
   (eglot-tempel-mode t))
 
-;;; dape
-;; HOLD 
-;; (use-package dape)
-
 ;;; Formatter
 (use-package apheleia
   :bind
@@ -1815,9 +1792,6 @@ When `switch-to-buffer-obey-display-actions' is non-nil,
 ;;; Bash
 (use-package sh-script
   :ensure nil
-  :hook
-  (sh-mode . eglot-ensure)
-  (bash-ts-mode . eglot-ensure)
   :config
   (add-to-list 'eglot-server-programs '((sh-mode bash-ts-mode) . ("bash-language-server" "start"))))
 
@@ -1836,11 +1810,6 @@ When `switch-to-buffer-obey-display-actions' is non-nil,
   :custom
   (rustic-cargo-use-last-stored-arguments t)
   (rustic-lsp-client 'eglot))
-
-;; just
-(use-package just-mode)
-(use-package justl)
-
 
 ;;; Ruby
 (use-package ruby-mode
@@ -1893,8 +1862,7 @@ When `switch-to-buffer-obey-display-actions' is non-nil,
              (not robe-running))
         (progn
           (apply orig args)
-          (robe-start)
-          (ruby-switch-to-last-ruby-buffer))
+          (robe-start))
       (apply orig args)))
   (advice-add #'inf-ruby :around #'my/inf-ruby-robe-start)
 
@@ -1917,34 +1885,6 @@ When `switch-to-buffer-obey-display-actions' is non-nil,
 (use-package crystal-mode
   :mode "\\.cr\\'"
   :interpreter "crystal")
-
-;;; Elixir
-(use-package elixir-ts-mode
-  :ensure nil
-  :mode ("\\.ex\\'" . elixir-ts-mode)
-  :bind
-  (:map elixir-ts-mode-map
-        ("M-RET" . #'my/insert-elixir-pipe-operator))
-  :config
-  ;; modified from https://www.bounga.org/emacs/2020/04/22/easily-insert-elixir-pipe-operator-in-emacs/
-  (defun my/insert-elixir-pipe-operator ()
-    "Insert a newline and the |> operator"
-    (interactive)
-    (end-of-line)
-    (unless (save-excursion
-              (beginning-of-line)
-              (looking-at-p "[[:space:]]*$"))
-      (newline-and-indent))
-    (insert "|> ")))
-
-(use-package inf-elixir
-  :after elixir-ts-mode
-  :bind
-  (:map elixir-ts-mode-map
-        ("C-c C-s" . inf-elixir)
-        ("C-c C-b" . inf-elixir-send-buffer)
-        ("C-c C-r" . inf-elixir-send-region)
-        ("C-x C-e" . inf-elixir-send-line)))
 
 ;;; Python
 (use-package python
@@ -1980,36 +1920,6 @@ When `switch-to-buffer-obey-display-actions' is non-nil,
   (cider-jack-in-default 'babashka)
   (cider-repl-display-help-banner nil)
   (org-babel-clojure-backend 'cider))
-
-;;; Janet
-(use-package janet-ts-mode
-  :ensure (:host github :repo "sogaiu/janet-ts-mode" :files ("*.el"))
-  :mode "\\.janet\\'"
-  :interpreter "janet"
-  :init
-  (add-to-list 'treesit-language-source-alist
-               '(janet-simple . ("https://github.com/sogaiu/tree-sitter-janet-simple"))))
-
-(use-package ajrepl
-  :ensure (:host github
-                 :repo "sogaiu/ajrepl"
-                 :files (:defaults ("ajrepl/"
-                                    "ajrepl/*")))
-  :after janet-ts-mode
-  :bind
-  (:map janet-ts-mode-map
-        ("C-c C-s" . #'ajrepl))
-  :config
-  (add-hook 'janet-ts-mode-hook
-            #'ajrepl-interaction-mode))
-
-;;; lua
-(use-package lua-ts-mode
-  :ensure nil
-  :mode ("\\.lua\\'" . lua-ts-mode)
-  :hook (lua-ts-mode . eglot-ensure)
-  :init
-  (add-to-list 'eglot-server-programs '(lua-ts-mode . ("stylua" "-"))))
 
 ;;; json
 (use-package json
