@@ -1,9 +1,6 @@
 if status is-interactive
     # Commands to run in interactive sessions can go here
 
-    # Variables
-    set -gx NOTES_DIR "~/Documents/org/denote"
-
     # abbr for the deck
     set current_os (cat /etc/os-release | rg "^ID=\w+\$" | cut -d = -f 2)
     if [ current_os = "bazzite " ]
@@ -13,7 +10,6 @@ if status is-interactive
     set -e current_os
 
     abbr -a e exit
-    # abbr -a n $EDITOR $NOTES_DIR
     abbr -a gu gitui
     abbr -a ecc emacsclient -nc
     abbr -a ect emacsclient -t
