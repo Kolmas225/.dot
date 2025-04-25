@@ -15,13 +15,7 @@ if status is-interactive
     abbr -a ect emacsclient -t
     abbr -a imgcat wezterm imgcat
 
-    if [ (command -v helix) ]
-        set -gx EDITOR helix
-        abbr -a hl helix
-    else
-        set -gx EDITOR hx
-        abbr -a hl hx
-    end
+    set -gx EDITOR "emacsclient -t"
 
     # yazi
     function y
