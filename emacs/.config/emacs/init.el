@@ -1501,7 +1501,8 @@ When `switch-to-buffer-obey-display-actions' is non-nil,
    'org-babel-load-languages
    '((clojure . t)
      (python . t)
-     (ruby . t))))
+     (ruby . t)
+     (shell . t))))
 
 (use-package org-appear
   :hook
