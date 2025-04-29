@@ -6,3 +6,7 @@ ruby-mode
   source 'https://rubygems.org'\nend" o n)
 
 (hdoc "<<~" (p "EOF" name) n> "  " q n> name)
+
+(r "require '" q "'")
+(rr "require_relative '" q "'")
+
