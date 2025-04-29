@@ -8,3 +8,7 @@ Style/FrozenStringLiteralComment:
 
 Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented_relative_to_receiver
+
+Lint/ItWithoutArgumentsInBlock:
+  Enabled: false
+  
