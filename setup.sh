@@ -6,7 +6,7 @@ SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 
 baseSetupPacman() {
     sudo pacman -Syyu base-devel stow git curl wget unzip fd ripgrep \
-         unarchiver fish helix wezterm zoxide yazi eza \
+         unarchiver fish helix ghostty zoxide yazi eza \
          tree-sitter libgccjit
 }
 
@@ -14,11 +14,6 @@ baseSetupDnf() {
     sudo dnf install stow git wget curl \
          fd ripgrep unar fish helix zoxide eza \
          tree-sitter libgccjit
-
-    # Fedora's repo don't have wezterm
-    wget -o /tmp/wezterm.rpm https://github.com/wez/wezterm/releases/download/nightly/wezterm-nightly-fedora40.rpm
-    sudo dnf install /tmp/wezterm.rpm
-    rm /tmp/wezterm.rpm
 }
 
 # baseSetupApt () {
