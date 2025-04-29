@@ -1787,9 +1787,7 @@ When `switch-to-buffer-obey-display-actions' is non-nil,
   :ensure nil
   :preface
   (add-to-list 'major-mode-remap-alist '(sh-mode . bash-ts-mode))
-  (add-to-list 'auto-mode-alist '("\\.y[a]?ml\\'" . yaml-ts-mode))
-  :custom
-  (treesit-extra-load-path '("~/src/tree-sitter-module-v2.5/")))
+  (add-to-list 'auto-mode-alist '("\\.y[a]?ml\\'" . yaml-ts-mode)))
 
 ;;; elisp
 (use-package ielm
