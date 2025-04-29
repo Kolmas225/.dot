@@ -53,6 +53,19 @@ if status is-interactive
         return 0
     end
 
+    function stow-init
+        cd ~/.dot/
+        stow bin bash
+        stow --no-folding term helix emacs misc media
+        cd -
+    end
+    function restow-all
+        cd ~/.dot/
+        stow -R bin bash
+        stow -R --no-folding term helix emacs misc media
+        cd -
+    end
+
     zoxide init fish --cmd cd | source
 end
 
