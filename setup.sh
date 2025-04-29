@@ -6,12 +6,13 @@ SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 
 baseSetupPacman() {
     sudo pacman -Syyu base-devel stow git curl wget unzip fd ripgrep \
-         unarchiver fish helix wezterm zoxide yazi \
+         unarchiver fish helix wezterm zoxide yazi eza \
          tree-sitter libgccjit
 }
 
 baseSetupDnf() {
-    sudo dnf install stow git wget curl fd ripgrep unar fish helix zoxide \
+    sudo dnf install stow git wget curl \
+         fd ripgrep unar fish helix zoxide eza \
          tree-sitter libgccjit
 
     # Fedora's repo don't have wezterm
@@ -57,6 +58,8 @@ cd "$SCRIPT_DIR"
 rm -rf "$HOME/.bashrc" "$HOME/.bash_profile" "$HOME/.bashrc.d"
 stow bash bin
 stow --no-folding term helix emacs misc media
+
+mkdir -p "$HOME/src"
 
 bash ./emacs-treesit-module.sh
 
