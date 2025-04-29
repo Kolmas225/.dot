@@ -11,3 +11,6 @@ font-family = "Maple Mono"
 keybind = ctrl+m=text:\x0D
 keybind = ctrl+i=text:\x09
 keybind = ctrl+[=text:\x1B
+
+keybind = unconsumed:ctrl+enter=ignore
+keybind = unconsumed:ctrl+shift+enter=ignore
