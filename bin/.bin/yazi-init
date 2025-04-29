@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+ya pack -a yazi-rs/plugins:full-border
+ya pack -a yazi-rs/plugins:smart-enter
+ya pack -a yazi-rs/plugins:chmod
+ya pack -a yazi-rs/plugins:toggle-pane
