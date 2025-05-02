@@ -188,7 +188,6 @@
   ;; skip command that won't work on the current mode
   (read-extended-command-predicate #'command-completion-default-include-p)
   (kill-do-not-save-duplicates t)
-  (mode-require-final-newline 'visit-save)
   (delete-pair-blink-delay 0.1)   ;don't really use delete-pair tho
   (global-auto-revert-mode t)
   ;; disable the annoying backup files
