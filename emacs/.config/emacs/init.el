@@ -1483,6 +1483,19 @@ When `switch-to-buffer-obey-display-actions' is non-nil,
            "KILL(k)") ; Task was cancelled, aborted, or is no longer applicable
           )))
 
+;; org-crypt
+(use-package org-crypt
+  :ensure nil
+  :custom
+  (org-crypt-disable-auto-save t)
+  (org-tags-exclude-from-inheritance '("crypt"))
+  :init
+  (org-crypt-use-before-save-magic)
+  :bind
+  (:map org-mode-map
+        ("C-c C-;" . #'org-decrypt-entry)
+        ("C-c C-M-;" . #'org-decrypt-entries)))
+
 ;; org-babel & source blocks
 (use-package org
   :ensure nil
