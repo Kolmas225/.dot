@@ -1956,7 +1956,11 @@ When `switch-to-buffer-obey-display-actions' is non-nil,
 (use-package web-mode
   :mode
   ("\\.erb\\'" . web-mode)
-  ("\\.html?\\'" . web-mode))
+  ("\\.html?\\'" . web-mode)
+  :custom
+  (web-mode-markup-indent-offset 2)
+  (web-mode-css-indent-offset 2)
+  (web-mode-code-indent-offset 2))
 
 (use-package gptel
   :preface
