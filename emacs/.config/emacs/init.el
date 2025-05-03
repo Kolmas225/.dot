@@ -1826,6 +1826,8 @@ When `switch-to-buffer-obey-display-actions' is non-nil,
   (ruby-base-mode . flymake-mode)
   (ruby-base-mode . indent-bars-mode)
   (ruby-base-mode . subword-mode)
+  :init
+  (add-to-list 'major-mode-remap-alist '(ruby-mode . ruby-ts-mode))
   :config
   (with-eval-after-load 'apheleia
     (setf (alist-get 'ruby-mode apheleia-mode-alist)
@@ -1838,7 +1840,9 @@ When `switch-to-buffer-obey-display-actions' is non-nil,
   :ensure
   (:host github :repo "Kolmas225/ruby-end.el" :files ("*.el"))
   :custom
-  (ruby-end-insert-newline nil))
+  (ruby-end-insert-newline nil)
+  :hook
+  (ruby-base-mode . ruby-end-mode))
 
 (use-package robe
   :bind
@@ -1852,6 +1856,7 @@ When `switch-to-buffer-obey-display-actions' is non-nil,
   (inf-ruby-default-implementation "pry")
   :hook
   (inf-ruby-mode . puni-mode)
+  (ruby-base-mode . inf-ruby-minor-mode)
   :bind
   ("C-c o r r" . inf-ruby)
   (:map inf-ruby-minor-mode-map
