@@ -9,4 +9,5 @@ ruby-mode
 
 (r "require '" q "'")
 (rr "require_relative '" q "'")
+(init "def initialize" q n "end" >)
 
