@@ -15,6 +15,13 @@ if status is-interactive
     abbr -a ect emacsclient -t
     abbr -a imgcat wezterm imgcat
 
+    if [ (command -v eza) ]
+        alias ls='eza --icons --group-directories-first'
+        alias la='ls -a'
+        alias ll='ls -lb'
+        alias lla='ll -a'
+    end
+
     if [ (command -v helix) ]
         set -gx EDITOR helix
         abbr -a hl helix
