@@ -2025,5 +2025,13 @@ If there are errors, print them in `dash-docs-debugging-buffer'"
   ;; Use the symbol at point as initial search term
   (consult-customize consult-dash :initial (thing-at-point 'symbol)))
 
+(use-package rime
+  :custom
+  (default-input-method "rime")
+  (rime-share-data-dir "~/.config/ibus/rime")
+  (rime-user-data-dir (expand-file-name "rime/" user-cache-directory))
+  (rime-show-candidate 'posframe)
+  (rime-posframe-style 'vertical))
+
 (provide 'init)
 ;;; init.el ends here
