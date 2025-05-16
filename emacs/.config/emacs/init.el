@@ -2031,7 +2031,10 @@ If there are errors, print them in `dash-docs-debugging-buffer'"
   (rime-share-data-dir "~/.config/ibus/rime")
   (rime-user-data-dir (expand-file-name "rime/" user-cache-directory))
   (rime-show-candidate 'posframe)
-  (rime-posframe-style 'vertical))
+  (rime-posframe-style 'vertical)
+  :config
+  ;; ref: https://github.com/DogLooksGood/emacs-rime/issues/161#issuecomment-979907791
+  (add-hook 'kill-emacs-hook (lambda () (when rime--lib-loaded (rime-lib-finalize)))))
 
 (provide 'init)
 ;;; init.el ends here
