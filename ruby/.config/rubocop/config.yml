@@ -1,7 +1,13 @@
 AllCops:
   ParserEngine: parser_prism
-  TargetRubyVersion: 3.3
+  TargetRubyVersion: 3.4
   NewCops: enable
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+Style/StringLiteralsInInterpolation:
+  EnforcedStyle: double_quotes
 
 Style/FrozenStringLiteralComment:
   EnforcedStyle: never
@@ -11,4 +17,3 @@ Layout/MultilineMethodCallIndentation:
 
 Lint/ItWithoutArgumentsInBlock:
   Enabled: false
-  
