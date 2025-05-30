@@ -339,12 +339,12 @@
                  default-directory))))
       (compile-multi query command)))
 
-  (push `(ruby-base-mode
-          ("ruby:file" "ruby" (buffer-file-name)))
-        compile-multi-config)
-  (push '((file-exists-p "Rakefile")
-          ("rake:default" . "rake default")
-          ("rake:test" . "rake test"))
+  (push `(c-ts-mode
+          ("cc:file" "gcc" "-o"
+           (file-relative-name (file-name-sans-extension (buffer-file-name)))
+           (file-relative-name (buffer-file-name))
+           "&&"
+           (concat "./" (file-relative-name (file-name-sans-extension (buffer-file-name))))))
         compile-multi-config))
 
 (use-package consult-compile-multi
@@ -1847,7 +1847,17 @@ When `switch-to-buffer-obey-display-actions' is non-nil,
           '(rubocop))
     (setf (alist-get 'ruby-ts-mode apheleia-mode-alist)
           '(rubocop)))
-  (add-to-list 'eglot-server-programs '(ruby-base-mode "ruby-lsp")))
+  (add-to-list 'eglot-server-programs '(ruby-base-mode "ruby-lsp"))
+
+  (with-eval-after-load 'compile-multi
+    (push `(ruby-base-mode
+            ("ruby:file" "ruby"
+             (file-relative-name (buffer-file-name))))
+          compile-multi-config)
+    (push '((file-exists-p "Rakefile")
+            ("rake:default" . "rake default")
+            ("rake:test" . "rake test"))
+          compile-multi-config)))
 
 (use-package ruby-end
   :ensure
