@@ -73,6 +73,10 @@ if status is-interactive
         cd -
     end
 
+    function rq
+        ruby -rjson -e 'ip = JSON.parse(ARGF.read);'"$argv" ;
+    end
+
     zoxide init fish --cmd cd | source
 end
 
