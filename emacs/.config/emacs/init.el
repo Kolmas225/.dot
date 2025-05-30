@@ -1952,6 +1952,22 @@ When `switch-to-buffer-obey-display-actions' is non-nil,
   (cider-repl-display-help-banner nil)
   (org-babel-clojure-backend 'cider))
 
+;; js
+(use-package js
+  :ensure nil
+  :custom
+  (js-indent-level 2)
+  :hook
+  (js-base-mode . (lambda () (setq-local tab-width 2)))
+  :init
+  (add-to-list 'major-mode-remap-alist '(js-mode . js-ts-mode))
+  :config
+  (with-eval-after-load 'apheleia
+    (setf (alist-get 'js-mode apheleia-mode-alist)
+          '(denofmt))
+    (setf (alist-get 'js-ts-mode apheleia-mode-alist)
+          '(denofmt))))
+
 ;;; json
 (use-package json
   :ensure nil
