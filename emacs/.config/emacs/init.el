@@ -1421,6 +1421,7 @@ When `switch-to-buffer-obey-display-actions' is non-nil,
   (org-special-ctrl-a/e t)
   (org-special-ctrl-k t)
   (org-pretty-entities t)
+  (org-log-done 'time)
   :bind
   ("C-c l s" . #'org-store-link)
   ("C-M-<return>" . #'org-insert-subheading)
