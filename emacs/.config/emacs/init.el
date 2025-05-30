@@ -1394,7 +1394,7 @@ When `switch-to-buffer-obey-display-actions' is non-nil,
   (transient-levels-file (concat user-cache-directory "transient-levels.el"))
   :bind
   (:map transient-map
-        ("<escape>" . transient-quit-one)))
+        ("C-M-g" . transient-quit-all)))
 
 ;;; Spellchecking
 (use-package jinx
