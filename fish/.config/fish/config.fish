@@ -1,20 +1,10 @@
 if status is-interactive
     # Commands to run in interactive sessions can go here
 
-    # abbr for the deck
-    set current_os (cat /etc/os-release | rg "^ID=\w+\$" | cut -d = -f 2)
-    if [ current_os = "bazzite " ]
-        abbr -a dbe distrobox enter -n bazzite-arch-gnome
-        abbr -a dbef distrobox enter -n bazzite-arch-gnome -- fish -i
-    end
-    set -e current_os
-
     abbr -a e exit
-    abbr -a gu gitui
     abbr -a ecc emacsclient -nc
     abbr -a ect emacsclient -t
-    abbr -a imgcat wezterm imgcat
-
+    
     if [ (command -v eza) ]
         alias ls='eza --icons --group-directories-first'
         alias la='ls -a'
@@ -22,23 +12,13 @@ if status is-interactive
         alias lla='ll -a'
     end
 
-    if [ (command -v helix) ]
-        set -gx EDITOR helix
-        abbr -a hl helix
-    else
-        set -gx EDITOR hx
-        abbr -a hl hx
-    end
-
-    # yazi
-    function y
-        set tmp (mktemp -t "yazi-cwd.XXXXXX")
-        yazi $argv --cwd-file="$tmp"
-        if set cwd (command cat -- "$tmp"); and [ -n "$cwd" ]; and [ "$cwd" != "$PWD" ]
-            builtin cd -- "$cwd"
-        end
-        rm -f -- "$tmp"
-    end
+    # if [ (command -v helix) ]
+    #     set -gx EDITOR helix
+    #     abbr -a hl helix
+    # else
+    #     set -gx EDITOR hx
+    #     abbr -a hl hx
+    # end
 
     function gitconf
         git config user.name $argv[1]
