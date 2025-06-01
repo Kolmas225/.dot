@@ -1,0 +1,19 @@
+# -*- mode: conf; -*-
+
+set icons
+set hidden
+
+map n updir
+map e down
+map i up
+map a open
+map gg top
+map ge bottom
+map . set hidden!
+
+cmd open ${{
+  case $(file --mime-type "$f" -bL) in
+    text/*|application/json) $EDITOR "$fx";;
+  *) for f in "$fx"; do xdg-open "$f"> /dev/null 2> /dev/null & done;;
+  esac
+}}

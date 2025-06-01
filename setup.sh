@@ -6,7 +6,7 @@ SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 
 baseSetupPacman() {
     sudo pacman -Syyu base-devel stow git curl wget unzip fd ripgrep \
-         unarchiver fish helix ghostty zoxide yazi eza \
+         unarchiver fish helix ghostty zoxide lf eza \
          tree-sitter libgccjit
 }
 
