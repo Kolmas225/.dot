@@ -2061,7 +2061,8 @@ If there are errors, print them in `dash-docs-debugging-buffer'"
 (use-package rime
   :custom
   (default-input-method "rime")
-  (rime-share-data-dir "~/.config/ibus/rime")
+  ;; (rime-share-data-dir "~/.config/ibus/rime")
+  (rime-share-data-dir "~/.local/share/fcitx5/rime")
   (rime-user-data-dir (expand-file-name "rime/" user-cache-directory))
   (rime-show-candidate 'posframe)
   (rime-posframe-style 'vertical)
