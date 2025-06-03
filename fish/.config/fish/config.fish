@@ -56,8 +56,12 @@ if status is-interactive
     function rq
         ruby -rjson -e 'ip = JSON.parse(ARGF.read);'"$argv" ;
     end
-
+    
     zoxide init fish --cmd cd | source
 end
 
-status --is-interactive; and ~/.rbenv/bin/rbenv init - --no-rehash fish | source
+# installed via pacman
+rbenv init - | source
+
+# with install script
+# ~/.rbenv/bin/rbenv init - --no-rehash fish | source
