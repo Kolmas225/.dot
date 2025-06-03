@@ -750,7 +750,7 @@ mouse-3: go to end")))
         ;; ("M-s" . #'consult-history) ;; orig. next-matching-history-element
         ("M-r" . #'consult-history)) ;; orig. previous-matching-history-element
   (:map goto-map
-        ("M-f" . #'consult-flymake)
+        ("M-f" . #'consult-flycheck)
         ("M-e" . #'consult-compile-error)
         ("M-j" . #'consult-mark)
         ("j" . #'consult-global-mark)
@@ -801,6 +801,8 @@ mouse-3: go to end")))
         ("t d" . #'consult-todo-dir)
         ("t p" . #'consult-todo-project)
         ("t a" . #'consult-todo-all)))
+
+(use-package consult-flycheck)
 
 (use-package embark
   :custom
@@ -1746,8 +1748,69 @@ When `switch-to-buffer-obey-display-actions' is non-nil,
    ("C-x C-a r" . activities-rename)
    ("C-x C-a C-<backspace>" . activities-discard)))
 
-(use-package flymake
-  :ensure nil)
+(use-package flycheck
+  :custom
+  (flycheck-emacs-lisp-load-path 'inherit)
+  ;; Rerunning checks on every newline is a mote excessive.
+  (flycheck-check-syntax-automatically '(save idle-change mode-enabled))
+  ;; Don't recheck on idle as often
+  (flycheck-idle-change-delay 1.0)
+  (flycheck-buffer-switch-check-intermediate-buffers t)
+  (flycheck-display-errors-delay 0.25)
+  :custom-face
+  (flycheck-info ((nil (:underline (:style line :color ,(catppuccin-get-color 'green))))))
+  (flycheck-warning ((nil (:underline (:style line :color ,(catppuccin-get-color 'yellow))))))
+  (flycheck-error ((nil (:underline (:style line :color ,(catppuccin-get-color 'red))))))
+  :init
+  (global-flycheck-mode 1)
+  :config
+  (define-fringe-bitmap 'flycheck-fringe-bitmap-ball
+    (vector #b00000000
+            #b00000000
+            #b00000000
+            #b00000000
+            #b00000000
+            #b00000000
+            #b00000000
+            #b00011100
+            #b00111110
+            #b00111110
+            #b00111110
+            #b00011100
+            #b00000000
+            #b00000000
+            #b00000000
+            #b00000000
+            #b00000000))
+
+    (flycheck-define-error-level 'error
+      :severity 100
+      :compilation-level 2
+      :overlay-category 'flycheck-error-overlay
+      :fringe-bitmap 'flycheck-fringe-bitmap-ball
+      :fringe-face 'flycheck-fringe-error
+      :error-list-face 'flycheck-error-list-error)
+
+    (flycheck-define-error-level 'warning
+      :severity 10
+      :compilation-level 1
+      :overlay-category 'flycheck-warning-overlay
+      :fringe-bitmap 'flycheck-fringe-bitmap-ball
+      :fringe-face 'flycheck-fringe-warning
+      :error-list-face 'flycheck-error-list-warning)
+
+    (flycheck-define-error-level 'info
+      :severity -10
+      :compilation-level 0
+      :overlay-category 'flycheck-info-overlay
+      :fringe-bitmap 'flycheck-fringe-bitmap-ball
+      :fringe-face 'flycheck-fringe-info
+      :error-list-face 'flycheck-error-list-info))
+
+(use-package flycheck-eglot
+  :after (flycheck eglot)
+  :config
+  (global-flycheck-eglot-mode 1))
 
 ;;; LSP - Eglot
 (use-package eglot
@@ -1843,7 +1906,7 @@ When `switch-to-buffer-obey-display-actions' is non-nil,
   ;; FIXME Disabling popupinfo until this resolves
   ;; https://github.com/dgutov/robe/issues/144
   (ruby-base-mode . (lambda () (setq-local corfu-popupinfo-delay '(nil . 0.2))))
-  (ruby-base-mode . flymake-mode)
+  (ruby-base-mode . (lambda () (setq-local flycheck-checkers '(ruby-rubocop))))
   (ruby-base-mode . indent-bars-mode)
   (ruby-base-mode . subword-mode)
   :init
@@ -1851,9 +1914,9 @@ When `switch-to-buffer-obey-display-actions' is non-nil,
   :config
   (with-eval-after-load 'apheleia
     (setf (alist-get 'ruby-mode apheleia-mode-alist)
-          '(rubocop))
+          '(ruby-rubocop))
     (setf (alist-get 'ruby-ts-mode apheleia-mode-alist)
-          '(rubocop)))
+          '(ruby-rubocop)))
   (add-to-list 'eglot-server-programs '(ruby-base-mode "ruby-lsp"))
 
   (with-eval-after-load 'compile-multi
