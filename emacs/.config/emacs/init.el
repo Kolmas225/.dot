@@ -213,7 +213,9 @@
   (indent-tabs-mode nil)
   ;; browse-url
   (browse-url-browser-function #'browse-url-firefox)
-  (browse-url-firefox-program "firefox-flatpak-private")
+  ;; (browse-url-firefox-program "firefox-flatpak-private")
+  (browse-url-firefox-program "firefox")
+  (browse-url-firefox-arguments '("--private-window"))
   ;; emacs 30+: disable ispell completion function in favour of `cape-dict'
   (text-mode-ispell-word-completion nil)
   :hook
