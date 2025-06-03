@@ -458,11 +458,11 @@
 
 ;;; Font
 
-(set-face-attribute 'default nil :font "Maple Mono-14")
-(set-face-attribute 'fixed-pitch nil :font "Maple Mono-14")
-(set-face-attribute 'fixed-pitch-serif nil :font "Maple Mono-14")
+(set-face-attribute 'default nil :font "Maple Mono-13")
+(set-face-attribute 'fixed-pitch nil :font "Maple Mono-13")
+(set-face-attribute 'fixed-pitch-serif nil :font "Maple Mono-13")
 
-(set-face-attribute 'variable-pitch nil :family "Inter-14")
+(set-face-attribute 'variable-pitch nil :family "Inter-13")
 
 ;; CJK font
 (dolist (script '(cjk-misc han kana hangul))
@@ -504,7 +504,7 @@
   :ensure nil
   :config
   ;; (add-to-list 'initial-frame-alist '(fullscreen . maximized))
-  (add-hook 'window-setup-hook #'toggle-frame-fullscreen))
+  (add-hook 'window-setup-hook #'toggle-frame-maximized))
 
 ;; (use-package doom-themes
 ;;   :custom

@@ -4,7 +4,7 @@ theme = "catppuccin-macchiato"
 window-decoration = none
 
 # fonts
-font-size = 14
+font-size = 13
 font-family = "Maple Mono"
 
 # HACK: CTRL-M = CR, CTRL-I = Tab, CTRL-[ = Esc
