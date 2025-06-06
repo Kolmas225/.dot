@@ -2081,6 +2081,7 @@ When `switch-to-buffer-obey-display-actions' is non-nil,
 (use-package dash-docs
   :hook
   (ruby-base-mode . (lambda () (setq-local dash-docs-docsets '("Ruby" "Ruby on Rails"))))
+  (inf-ruby-mode . (lambda () (setq-local dash-docs-docsets '("Ruby" "Ruby on Rails"))))
   (python-base-mode . (lambda () (setq-local dash-docs-docsets '("Python 3"))))
   (web-mode . (lambda () (setq-local dash-docs-docsets '("HTML" "CSS" "JavaScript"))))
   (css-mode . (lambda () (setq-local dash-docs-docsets '("HTML" "CSS"))))
