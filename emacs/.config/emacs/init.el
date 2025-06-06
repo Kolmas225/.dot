@@ -785,6 +785,9 @@ mouse-3: go to end")))
   (setq consult--regexp-compiler #'consult--orderless-regexp-compiler))
 
 (use-package consult-dir
+  :ensure
+  (:host github :repo "Kolmas225/consult-dir" :branch "fork" :files ("*.el"))
+  :commands my/dired-consult-dir
   :custom
   (consult-dir-jump-file-command 'consult-fd) ;use consult-fd
   (consult-dir-sort-candidates t)   ;enable candidate sorting
@@ -792,7 +795,28 @@ mouse-3: go to end")))
   ("C-x C-d" . consult-dir)
   (:map vertico-map
         ("C-x C-d" . #'consult-dir)
-        ("C-x C-j" . #'consult-dir-jump-file)))
+        ("C-x C-j" . #'consult-dir-jump-file))
+  (:map dired-mode-map
+        ("z" . #'my/dired-consult-dir))
+  :config
+  (defvar consult-dir--source-zoxide
+	`(:name "Zoxide"
+            :narrow ?z
+			:category file
+			:face consult-file
+			:history file-name-history
+			:enabled ,(lambda () (featurep 'zoxide))
+			:items ,(mapcar (lambda (dir) (concat dir "/")) (zoxide-query)))
+	"zoxide directory source")
+  (add-to-list 'consult-dir-sources 'consult-dir--source-zoxide t)
+
+  (defun my/dired-consult-dir ()
+    (interactive)
+    (require 'consult-dir)
+    (let ((consult-dir-default-command #'consult-dir-dired))
+      (call-interactively #'consult-dir))))
+
+(use-package zoxide)
 
 (use-package consult-todo
   :bind
