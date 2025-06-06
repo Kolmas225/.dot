@@ -1387,7 +1387,11 @@ When `switch-to-buffer-obey-display-actions' is non-nil,
      magit-insert-unpulled-from-upstream
      magit-insert-recent-commits))
   :bind
-  ("C-x g" . #'magit-status))
+  ("C-x g" . #'magit-status)
+  :config
+  (with-eval-after-load 'project
+    (keymap-set project-prefix-map "m" #'magit-project-status)
+    (add-to-list 'project-switch-commands '(magit-project-status "Magit") t)))
 
 ;;; transient
 (use-package transient
