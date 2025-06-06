@@ -1,10 +1,21 @@
+for bin_path in ~/.local/bin ~/.bin
+    if test -d bin_path
+        if not contains -- bin_path $PATH
+            set -p PATH bin_path
+        end
+    end
+end
+
 if status is-interactive
     # Commands to run in interactive sessions can go here
+
+    function fish_greeting
+    end
 
     abbr -a e exit
     abbr -a ecc emacsclient -nc
     abbr -a ect emacsclient -t
-    
+
     if [ (command -v eza) ]
         alias ls='eza --icons --group-directories-first'
         alias la='ls -a'
@@ -12,13 +23,11 @@ if status is-interactive
         alias lla='ll -a'
     end
 
-    # if [ (command -v helix) ]
-    #     set -gx EDITOR helix
-    #     abbr -a hl helix
-    # else
-    #     set -gx EDITOR hx
-    #     abbr -a hl hx
-    # end
+    if [ (command -v helix) ]
+        abbr -a hl helix
+    else if [ (command -v hx) ]
+        abbr -a hl hx
+    end
 
     function gitconf
         git config user.name $argv[1]
@@ -56,11 +65,12 @@ if status is-interactive
     function rq
         ruby -rjson -e 'ip = JSON.parse(ARGF.read);'"$argv" ;
     end
-    
-    zoxide init fish --cmd cd | source
 end
 
-# installed via pacman
+# zoxide
+zoxide init fish --cmd cd | source
+
+# rbenv installed via pacman
 rbenv init - | source
 
 # with install script
