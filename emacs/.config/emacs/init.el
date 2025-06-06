@@ -1906,6 +1906,8 @@ When `switch-to-buffer-obey-display-actions' is non-nil,
   :ensure nil
   :custom
   (ruby-insert-encoding-magic-comment nil)
+  (ruby-block-indent nil)
+  (ruby-method-call-indent nil)
   :hook
   ;; FIXME Disabling popupinfo until this resolves
   ;; https://github.com/dgutov/robe/issues/144
