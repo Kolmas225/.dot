@@ -1906,7 +1906,7 @@ When `switch-to-buffer-obey-display-actions' is non-nil,
   ;; FIXME Disabling popupinfo until this resolves
   ;; https://github.com/dgutov/robe/issues/144
   (ruby-base-mode . (lambda () (setq-local corfu-popupinfo-delay '(nil . 0.2))))
-  (ruby-base-mode . (lambda () (setq-local flycheck-checkers '(ruby-rubocop))))
+  (ruby-base-mode . (lambda () (setq-local flycheck-checkers '(ruby-standard))))
   (ruby-base-mode . indent-bars-mode)
   (ruby-base-mode . subword-mode)
   :init
@@ -1914,9 +1914,9 @@ When `switch-to-buffer-obey-display-actions' is non-nil,
   :config
   (with-eval-after-load 'apheleia
     (setf (alist-get 'ruby-mode apheleia-mode-alist)
-          '(ruby-rubocop))
+          '(ruby-standard))
     (setf (alist-get 'ruby-ts-mode apheleia-mode-alist)
-          '(ruby-rubocop)))
+          '(ruby-standard)))
   (add-to-list 'eglot-server-programs '(ruby-base-mode "ruby-lsp"))
 
   (with-eval-after-load 'compile-multi
