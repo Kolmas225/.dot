@@ -1328,6 +1328,17 @@ When `switch-to-buffer-obey-display-actions' is non-nil,
 ;;   (eshell-load . eat-eshell-mode)
 ;;   (eshell-load . eat-eshell-visual-command-mode))
 
+(use-package vterm
+  :custom
+  (vterm-shell "/usr/bin/fish")
+  (vterm-eval-cmds '(("find-file" find-file)
+                     ("message" message)
+                     ("vterm-clear-scrollback" vterm-clear-scrollback)
+                     ("dired" dired)
+                     ("ediff-files" ediff-files)))
+  :bind
+  ("C-c o t" . #'vterm))
+
 ;;; Dired
 (use-package dired
   :ensure nil
@@ -1368,6 +1379,7 @@ When `switch-to-buffer-obey-display-actions' is non-nil,
           "\\*Async Shell Command\\*"
           "\\*scratch\\*"
           "^\\*.*eshell.*\\*$" eshell-mode ;eshell as a popup
+          "^\\*vterm\\*\\(?:<.*>\\)?" vterm-mode
           "\\*ielm\\*"
           help-mode
           helpful-mode

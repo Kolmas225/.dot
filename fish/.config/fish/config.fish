@@ -13,8 +13,12 @@ if status is-interactive
     end
 
     abbr -a e exit
-    abbr -a ecc emacsclient -nc
-    abbr -a ect emacsclient -t
+
+    if [ (command -v emacs) ]
+        abbr -a ecc emacsclient -nc
+        abbr -a ect emacsclient -t
+        source ~/.config/fish/conf.d/emacs-vterm.fish
+    end
 
     if [ (command -v eza) ]
         alias ls='eza --icons --group-directories-first'
