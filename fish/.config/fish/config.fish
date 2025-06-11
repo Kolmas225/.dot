@@ -1,7 +1,7 @@
 for bin_path in ~/.local/bin ~/.bin
-    if test -d bin_path
-        if not contains -- bin_path $PATH
-            set -p PATH bin_path
+    if test -d $bin_path
+        if not contains -- $bin_path $PATH
+            fish_add_path $bin_path
         end
     end
 end
