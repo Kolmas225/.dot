@@ -18,6 +18,6 @@ fi
 JOBS=$(nproc) ./batch.sh
 
 rm -rf "$XDG_CONFIG_HOME/emacs/tree-sitter"
-mv ./dist "$XDG_CONFIG_HOME/emacs/tree-sitter"
+mv $SRC_DIR/dist "$XDG_CONFIG_HOME/emacs/tree-sitter"
 
 echo "Finished installing tree-sitter-module"
