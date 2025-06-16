@@ -1398,8 +1398,6 @@ When `switch-to-buffer-obey-display-actions' is non-nil,
 
 ;;; Magit
 (use-package magit
-  :ensure
-  (:branch "main" :pre-build ("make" "info"))
   :custom
   ;; (magit-delete-by-moving-to-trash nil)
   (magit-copy-revision-abbreviated t)
