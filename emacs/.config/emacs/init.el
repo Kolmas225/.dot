@@ -1349,12 +1349,17 @@ When `switch-to-buffer-obey-display-actions' is non-nil,
 
 (use-package vterm
   :custom
-  (vterm-shell "/usr/bin/fish")
+  (vterm-shell "/usr/bin/env fish")
+  (vterm-tramp-shells
+   '(("ssh" login-shell "/bin/bash")
+     ("scp" login-shell "/bin/bash")
+     ("docker" "/bin/sh")))
   (vterm-eval-cmds '(("find-file" find-file)
                      ("message" message)
                      ("vterm-clear-scrollback" vterm-clear-scrollback)
                      ("dired" dired)
                      ("ediff-files" ediff-files)))
+  (vterm-timer-delay 0.05)
   :bind
   ("C-c o t" . #'vterm))
 
