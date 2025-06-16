@@ -416,8 +416,27 @@
 ;;; Tramp
 (use-package tramp
   :ensure nil
+  :custom
+  ;; (tramp-histfile-override t)
+  ;; Tips to speed up connections
+  (tramp-verbose 0)
+  (tramp-chunksize 2000)
+  ;; (tramp-use-connection-share nil)
+  :bind
+  ("C-c r a" . #'tramp-cleanup-all-connections)
+  ("C-c r ." . #'tramp-cleanup-this-connection)
+  ("C-c r SPC" . #'tramp-cleanup-connection)
   :init
-  (setq tramp-persistency-file-name (concat user-cache-directory "tramp")))
+  (setq tramp-persistency-file-name (concat user-cache-directory "tramp"))
+  :config
+  ;; (setq tramp-default-remote-shell "/bin/bash")
+  ;; https://www.gnu.org/software/tramp/#Improving-performance-of-asynchronous-remote-processes
+  (connection-local-set-profile-variables
+   'remote-direct-async-process
+   '((tramp-direct-async-process . t)))
+  (connection-local-set-profiles
+   '(:application tramp :protocol "ssh")
+   'remote-direct-async-process))
 
 (use-package whitespace
   :ensure nil
