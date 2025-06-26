@@ -315,8 +315,8 @@
   (compilation-scroll-output t)
   ;; (compilation-auto-jump-to-first-error t)
   :bind
-  ("<f5>" . #'recompile)
-  ("C-<f5>" . #'compile)
+  ("<f5>" . #'compile)
+  ("<f6>" . #'recompile)
   :config
   (add-hook 'compilation-filter-hook #'ansi-color-compilation-filter)
 
@@ -327,9 +327,9 @@
 
 (use-package compile-multi
   :bind
-  ("M-<f5>" . #'compile-multi)
+  ("<f9>" . #'compile-multi)
   (:map project-prefix-map
-        ("M-c" . #'my/project-compile-multi))
+        ("<f9>" . #'my/project-compile-multi))
   :config
   (defun my/project-compile-multi (&optional query command)
     "`compile-multi' on project root"
