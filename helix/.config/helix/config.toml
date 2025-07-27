@@ -10,6 +10,7 @@ popup-border = "popup"
 mouse = false
 middle-click-paste = false
 jump-label-alphabet = "ntesirachdoylupf"
+rainbow-brackets = true
 
 [editor.statusline]
 left = [
