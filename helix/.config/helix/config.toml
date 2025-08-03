@@ -11,6 +11,7 @@ mouse = false
 middle-click-paste = false
 jump-label-alphabet = "ntesirachdoylupf"
 rainbow-brackets = true
+editor-config = true
 
 [editor.statusline]
 left = [
