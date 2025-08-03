@@ -55,7 +55,7 @@ inlayHints.enumMemberValues.enabled = true
 [[language]]
 name = "ruby"
 language-servers = [
-  { name = "ruby-lsp", except-features = [
+  { name = "solargraph", except-features = [
     "format",
     "diagnostics",
   ] },
@@ -65,9 +65,6 @@ language-servers = [
   ] },
 ]
 auto-format = true
-[language-server.ruby-lsp]
-command = "ruby-lsp"
-args = []
 [language-server.standardrb]
 command = "standardrb"
 args = ["--lsp"]
