@@ -1422,8 +1422,20 @@ When `switch-to-buffer-obey-display-actions' is non-nil,
   (popper-mode 1)
   (popper-echo-mode 1))
 
+;;; transient
+(use-package transient
+  :ensure (:branch "main" :wait t)
+  :custom
+  (transient-history-file (concat user-cache-directory "transient-history.el"))
+  (transient-values-file (concat user-cache-directory "transient-values.el"))
+  (transient-levels-file (concat user-cache-directory "transient-levels.el"))
+  :bind
+  (:map transient-map
+        ("C-M-g" . transient-quit-all)))
+
 ;;; Magit
 (use-package magit
+  :ensure (:branch "main" :wait t)
   :custom
   ;; (magit-delete-by-moving-to-trash nil)
   (magit-copy-revision-abbreviated t)
@@ -1452,17 +1464,6 @@ When `switch-to-buffer-obey-display-actions' is non-nil,
   (with-eval-after-load 'project
     (keymap-set project-prefix-map "m" #'magit-project-status)
     (add-to-list 'project-switch-commands '(magit-project-status "Magit") t)))
-
-;;; transient
-(use-package transient
-  :ensure (:branch "main")
-  :custom
-  (transient-history-file (concat user-cache-directory "transient-history.el"))
-  (transient-values-file (concat user-cache-directory "transient-values.el"))
-  (transient-levels-file (concat user-cache-directory "transient-levels.el"))
-  :bind
-  (:map transient-map
-        ("C-M-g" . transient-quit-all)))
 
 ;;; Spellchecking
 (use-package jinx
@@ -1870,6 +1871,8 @@ When `switch-to-buffer-obey-display-actions' is non-nil,
       :fringe-bitmap 'flycheck-fringe-bitmap-ball
       :fringe-face 'flycheck-fringe-info
       :error-list-face 'flycheck-error-list-info))
+
+(use-package consult-flycheck)
 
 (use-package flycheck-eglot
   :after (flycheck eglot)
